@@ -6,9 +6,9 @@ class Jumbotron extends React.Component {
     return (
       <div className="col-12">
         <div className="jumbotron">
-          <h1 className="display-4">React weather app</h1>
+          <h1 className="display-4">Weather in </h1>
           <p className="lead">
-            Text
+            Country: 
           </p>
         </div>
       </div>
