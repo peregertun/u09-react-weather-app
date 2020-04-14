@@ -3,16 +3,7 @@ import React from "react";
 class Jumbotron extends React.Component {
   constructor() {
     super();
-    this.state = {
-      weather: undefined,
-      icon: undefined,
-      area: undefined,
-      temp: undefined,
-      latitude: undefined,
-      longitude: undefined,
-      unit: undefined,
-      toggleunit: undefined,
-    };
+    this.state = {};
   }
 
   componentDidMount() {
@@ -38,24 +29,63 @@ class Jumbotron extends React.Component {
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${unit}&&appid=${API_KEY}`
     );
     const data = await api_call.json();
-    let weather = data.weather["0"].description;
-    let icon = data.weather["0"].icon;
-    let area = data.name;
-    let country = data.sys.country;
-    let temp = data.main.temp;
 
-    this.setState({
-      weather: weather,
-      icon: icon,
-      area: area,
-      country: country,
-      temp: temp,
-      latitude: latitude,
-      longitude: longitude,
-    });
+    let deg = convertWindDir(data.wind.deg);
+    let sunRise = convertTime(data.sys.sunrise);
+    let sunSet = convertTime(data.sys.sunset);
+
+    function convertTime(unixTime) {
+      let dt = new Date(unixTime * 1000);
+      let h = dt.getHours();
+      let m = "0" + dt.getMinutes();
+      let t = h + ":" + m.substr(-2);
+      return t;
+    }
+
+    function convertWindDir(deg) {
+      let compass = [
+        "N",
+        "NNE",
+        "NE",
+        "ENE",
+        "E",
+        "ESE",
+        "SE",
+        "SSE",
+        "S",
+        "SSW",
+        "SW",
+        "WSW",
+        "W",
+        "WNW",
+        "NW",
+        "NNW",
+        "N",
+      ];
+      let index = Math.round((deg % 360) / 22.5);
+      return compass[index];
+    }
+
+    if (data) {
+      this.setState({
+        weather: data.weather["0"].description,
+        icon: data.weather["0"].icon,
+        area: data.name,
+        country: data.sys.country,
+        temp: data.main.temp,
+        feelsLike: data.main.feels_like,
+        humidity: data.main.humidity,
+        latitude: latitude,
+        longitude: longitude,
+        wind: data.wind.speed,
+        deg: deg,
+        sunRise: sunRise,
+        sunSet: sunSet,
+      });
+    }
   }
 
-  ToggleFunction = (latitude, longitude) => {
+  ToggleUnits = (latitude, longitude) => {
     this.setState((state) => ({
       toggleunit: !state.toggleunit,
       latitude: latitude,
@@ -71,6 +101,12 @@ class Jumbotron extends React.Component {
       area,
       country,
       temp,
+      feelsLike,
+      humidity,
+      wind,
+      deg,
+      sunRise,
+      sunSet,
       latitude,
       longitude,
     } = this.state;
@@ -81,7 +117,6 @@ class Jumbotron extends React.Component {
           <h1 className="display-4">
             Weather in {area}, {country}
           </h1>
-          {/* <p className="lead">Country:</p> */}
           <h2>{weather}</h2>
           <img
             src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
@@ -89,13 +124,19 @@ class Jumbotron extends React.Component {
           />
           <h2>
             {temp}&deg;
-            <a
-              href="#"
-              onClick={() => this.ToggleFunction(latitude, longitude)}
-            >
+            <button onClick={() => this.ToggleUnits(latitude, longitude)}>
               {this.state.toggleunit ? "F" : "C"}
-            </a>
+            </button>
           </h2>
+          <p>Feels like {feelsLike}</p>
+          <div>
+            <p>Sunrise: {sunRise}</p>
+            <p>Sunset: {sunSet}</p>
+            <p>
+              Wind: {wind} {deg}
+            </p>
+            <p>Air: {humidity}</p>
+          </div>
         </div>
       </div>
     );
