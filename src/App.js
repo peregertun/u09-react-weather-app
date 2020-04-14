@@ -28,7 +28,6 @@ class App extends React.Component {
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
     );
     const cityWeather = await api_call.json();
-    console.log(cityWeather);
 
     if (cityWeather.cod === 200) {
       this.setState({

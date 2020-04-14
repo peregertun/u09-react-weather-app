@@ -21,7 +21,7 @@ class Nav extends React.Component {
     if (this.state.city.length > 0) {
       this.props.callback(this.state.city);
     } else {
-      alert('Du måste fylla i en stad');
+      alert('You have to enter a city!');
     }
   }
 
