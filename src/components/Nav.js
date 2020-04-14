@@ -1,47 +1,29 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Form from "./Form";
-
-const API_KEY = "61dab6fb7df22a0d9bb49a92808e8af1";
-
 class Nav extends React.Component {
-  
-  getWeather = async (e) => {
-    e.preventDefault();
-    const city = e.target.elements.city.value;
-    const api_call = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-    );
-    const cityWeather = await api_call.json();
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: this.props.city
+    };
 
-    console.log(cityWeather);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    if (city) {
-      this.setState({
-        city: cityWeather.name,
-        country: cityWeather.sys.country,
-        temperature: cityWeather.main.temp,
-        wind: cityWeather.wind.speed,
-        humidity: cityWeather.main.humidity,
-        description: cityWeather.weather[0].description,
-        sunrise: cityWeather.sys.sunrise,
-        sunset: cityWeather.sys.sunset,
-        error: "",
-      });
+  handleChange(event) {
+    this.setState({ city: event.target.value });
+  }
 
+  handleSubmit (event) {
+    event.preventDefault();
+    if (this.state.city.length > 0) {
+      this.props.callback(this.state.city);
     } else {
-      this.setState({
-        city: undefined,
-        country: undefined,
-        temperature: undefined,
-        wind: undefined,
-        humidity: undefined,
-        description: undefined,
-        sunrise: undefined,
-        sunset: undefined,
-        error: "Please enter a city",
-      });
+      alert('Du måste fylla i en stad');
     }
-  };
+  }
 
   render() {
     return (
@@ -63,15 +45,19 @@ class Nav extends React.Component {
           </button>
 
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <div className="navbar-nav mr-auto">
-            - Built in React
-            </div>
-            <Form getWeather={this.getWeather} />
+            <div className="navbar-nav mr-auto">- Built in React</div>
+            <Form handleSubmit={this.handleSubmit} 
+            handleChange={this.handleChange} 
+            />
           </div>
         </nav>
       </div>
     );
   }
 }
+
+Nav.protoTypes = {
+  callback: PropTypes.func,
+};
 
 export default Nav;
