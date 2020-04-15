@@ -3,7 +3,10 @@ import "./App.css";
 
 import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
-import Weather from "./components/Weather";
+// import Weather from "./components/Weather";
+import Weather2 from "./components/Weather2.jsx";
+// import Form from "./components/form";
+import Form2 from "./components/test";
 
 class App extends React.Component {
 
@@ -33,8 +36,8 @@ class App extends React.Component {
         />
 
         <Jumbotron />
-
-        <Weather
+        <Form2 />
+        {/* <Weather
           city={this.state.city}
           country={this.state.country}
           temperature={this.state.temperature}
@@ -42,7 +45,8 @@ class App extends React.Component {
           humidity={this.state.humidity}
           description={this.state.description}
           error={this.state.error}
-        />
+        /> */}
+        <Weather2 />
 
       </div>
     );
