@@ -113,31 +113,55 @@ class Jumbotron extends React.Component {
 
     return (
       <div className="col-12">
-        <div className="jumbotron">
-          <h1 className="display-4">
-            Weather in {area}, {country}
-          </h1>
-          <h2>{weather}</h2>
-          <img
-            src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
-            alt="Icon"
-          />
-          <h2>
-            {temp}&deg;
-            <button onClick={() => this.ToggleUnits(latitude, longitude)}>
-              {this.state.toggleunit ? "F" : "C"}
-            </button>
-          </h2>
-          <p>Feels like {feelsLike}</p>
-          <div>
-            <p>Sunrise: {sunRise}</p>
-            <p>Sunset: {sunSet}</p>
-            <p>
-              Wind: {wind} {deg}
-            </p>
-            <p>Air: {humidity}</p>
+        {area && (
+          <div className="jumbotron text-center bg-blue">
+            <span className="text-uppercase">Your local weather at:</span>
+            <h1 className="display-4">
+              {area}, {country}
+            </h1>
+            <img
+              src={`http://openweathermap.org/img/wn/${icon}@2x.png`}
+              alt="Icon"
+            />
+            <h2 className="text-capitalize">{weather}</h2>
+            {area && feelsLike && (
+              <h2>
+                <span className="text-muted">Temperature:</span> {temp}&deg;
+                <span className="text-muted">
+                  , feels like {feelsLike}&deg;
+                </span>
+                <button onClick={() => this.ToggleUnits(latitude, longitude)}>
+                  {this.state.toggleunit ? "F" : "C"}
+                </button>
+              </h2>
+            )}
+            <ul className="list-unstyled list-group">
+              {sunRise && sunSet && (
+                <li>
+                  The sun rises at <strong>{sunRise}</strong> and sets at:{" "}
+                  <strong>{sunSet}</strong> (local time).
+                </li>
+              )}
+              {wind && deg && humidity && (
+                <li>
+                  Wind force:{" "}
+                  <strong>
+                    {wind} {deg}
+                  </strong>{" "}
+                  and humidity: <strong>{humidity}</strong>.
+                </li>
+              )}
+            </ul>
+            {area && (
+              <button href="/" className="btn btn-light float-right mt-2">
+                <span role="img" aria>
+                  ♥️
+                </span>
+                Save location
+              </button>
+            )}
           </div>
-        </div>
+        )}
       </div>
     );
   }

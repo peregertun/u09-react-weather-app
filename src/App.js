@@ -2,37 +2,49 @@ import React from "react";
 import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
 import Weather from "./components/Weather";
+import Forecast from "./components/Forecast";
+import Footer from "./components/Footer";
 
 import "./App.css";
 
 class App extends React.Component {
-
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
   }
-  
+
   // Tool box
   convertTime = (unixTime) => {
-      let dt = new Date(unixTime * 1000);
-      let h = dt.getHours();
-      let m = "0" + dt.getMinutes();
-      let t = h + ":" + m.substr(-2);
-      return t;
-    }
+    let dt = new Date(unixTime * 1000);
+    let h = dt.getHours();
+    let m = "0" + dt.getMinutes();
+    let t = h + ":" + m.substr(-2);
+    return t;
+  };
 
   convertDir = (deg) => {
     let compass = [
-      "N","NNE","NE",
-      "ENE","E","ESE",
-      "SE","SSE","S",
-      "SSW","SW","WSW",
-      "W","WNW","NW",
-      "NNW","N",
+      "N",
+      "NNE",
+      "NE",
+      "ENE",
+      "E",
+      "ESE",
+      "SE",
+      "SSE",
+      "S",
+      "SSW",
+      "SW",
+      "WSW",
+      "W",
+      "WNW",
+      "NW",
+      "NNW",
+      "N",
     ];
     const index = Math.round((deg % 360) / 22.5);
     return compass[index];
-  }
+  };
 
   toggleUnits = () => {
     this.setState((state) => ({
@@ -44,30 +56,28 @@ class App extends React.Component {
   };
 
   // API call
-  getWeather = async (query, apiEndpoint = 'weather', toggleunit) => {
-    const apiUrl = 'https://api.openweathermap.org/data/2.5/';
-    const apiKey = 'abafff9407e6299f362e6d1a0a127946';
-    
-    let unit = '';
-    
+  getWeather = async (query, apiEndpoint = "weather", toggleunit) => {
+    const apiUrl = "https://api.openweathermap.org/data/2.5/";
+    const apiKey = "abafff9407e6299f362e6d1a0a127946";
+
+    let unit = "";
+
     if (toggleunit) {
       unit = "metric";
     } else {
       unit = "imperial";
     }
-    
+
     let api_call = await fetch(
       apiUrl + apiEndpoint + `?q=${query}&units=${unit}&appid=${apiKey}`
-      //{apiUrl} + {apiEndpoint} + '?q=' + {city} + '&units=' +  {unit} + '&appid=' + {apiKey}
     );
     let data = await api_call.json();
-    console.log(data);
-    
+
     if (data.cod === 200) {
       const deg = this.convertDir(data.wind.deg);
       const sunRise = this.convertTime(data.sys.sunrise);
       const sunSet = this.convertTime(data.sys.sunset);
-    
+
       this.setState({
         weather: data.weather["0"].description,
         icon: data.weather["0"].icon,
@@ -84,39 +94,59 @@ class App extends React.Component {
         longitude: data.coord.lon,
         error: "",
       });
-
     } else {
       this.setState({
-        error: "Enter a city"
+        error: "Enter a city",
       });
     }
-  }
+  };
 
   render() {
     return (
       <div>
-        <Nav 
-          callback={this.getWeather.bind(this)}
-          city={this.state.city}
-        />
-        <Jumbotron />
-        <Weather 
-          weather={this.state.weather}
-          icon={this.state.icon}
-          city={this.state.city}
-          country={this.state.country}
-          temp={this.state.temp}
-          feelsLike={this.state.feelsLike}
-          humidity={this.state.humidity}
-          wind={this.state.wind}
-          deg={this.state.deg}
-          sunRise={this.state.sunRise}
-          sunSet={this.state.sunSet}
-          latitude={this.state.latitude}
-          longitude={this.state.longitude}
-          error={this.state.error}
-          toggleunit={this.state.toggleunit}
-        />
+        <Nav callback={this.getWeather.bind(this)} city={this.state.city} />
+        <main>
+          <Jumbotron />
+          <div className="container-fluid">
+            <div className="row">
+              <Weather
+                weather={this.state.weather}
+                icon={this.state.icon}
+                city={this.state.city}
+                country={this.state.country}
+                temp={this.state.temp}
+                feelsLike={this.state.feelsLike}
+                humidity={this.state.humidity}
+                wind={this.state.wind}
+                deg={this.state.deg}
+                sunRise={this.state.sunRise}
+                sunSet={this.state.sunSet}
+                latitude={this.state.latitude}
+                longitude={this.state.longitude}
+                error={this.state.error}
+                toggleunit={this.state.toggleunit}
+              />
+              <Forecast
+                weather={this.state.weather}
+                icon={this.state.icon}
+                city={this.state.city}
+                country={this.state.country}
+                temp={this.state.temp}
+                feelsLike={this.state.feelsLike}
+                humidity={this.state.humidity}
+                wind={this.state.wind}
+                deg={this.state.deg}
+                sunRise={this.state.sunRise}
+                sunSet={this.state.sunSet}
+                latitude={this.state.latitude}
+                longitude={this.state.longitude}
+                error={this.state.error}
+                toggleunit={this.state.toggleunit}
+              />
+            </div>
+          </div>
+        </main>
+        <Footer />
       </div>
     );
   }
