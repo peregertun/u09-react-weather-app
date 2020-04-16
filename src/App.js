@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
 import Weather from "./components/Weather";
@@ -6,18 +6,17 @@ import Forecast from "./components/Forecast";
 import Footer from "./components/Footer";
 
 import "./App.css";
-import { object } from "prop-types";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.displayData = [];
-    this.progge = [];
+    this.forecastDataArray = [];
 
     this.state = {
-      showdata: this.displayData,
-      stad: undefined,
-      prog: this.progge,
+      showData: this.displayData,
+      city: undefined,
+      prog: this.forecastDataArray,
     };
     this.prependData = this.prependData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -26,30 +25,23 @@ class App extends React.Component {
   prependData() {
     this.displayData.unshift(
       <div id="display-data" key="1">
-        <pre>
-          {this.state.stad}
-          {this.props.wind}
-        </pre>
+        <pre>{this.state.city}</pre>
       </div>
     );
     this.setState({
-      showdata: this.displayData,
-      stad: "",
+      showData: this.displayData,
+      city: "",
     });
     let query = this.displayData["0"].props.children.props.children;
     this.getWeather(query, "forecast", true);
 
-
     // DENNA MÅSTE ÄNDRAS TILL FORECAST FÖR ATT MAN SKA KUNNA FÅ PROGNOSEN!
-//ÄR DEN WEATHER FÅR MAN NUVARANDE VÄDER
-
-
-
+    //ÄR DEN WEATHER FÅR MAN NUVARANDE VÄDER
   }
   handleChange(e) {
     let getTextAreaValue = e.target.value;
     this.setState({
-      stad: getTextAreaValue,
+      city: getTextAreaValue,
     });
   }
 
@@ -95,122 +87,126 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
-  // API call
-  getWeather = async (query, apiEndpoint, toggleunit) => {
-    if (apiEndpoint === "weather") {
-      const apiUrl = "https://api.openweathermap.org/data/2.5/";
-      const apiKey = "abafff9407e6299f362e6d1a0a127946";
-      let unit = "";
-      if (toggleunit) {
-        unit = "metric";
-      } else {
-        unit = "imperial";
-      }
+  // API call function
+  getWeather = async (query = "stockholm", toggleunit = true) => {
+    const apiUrl = "https://api.openweathermap.org/data/2.5/";
+    const apiKey = "abafff9407e6299f362e6d1a0a127946";
 
-      let api_call = await fetch(
-        apiUrl + apiEndpoint + `?q=${query}&units=${unit}&appid=${apiKey}`
-        //{apiUrl} + {apiEndpoint} + '?q=' + {city} + '&units=' +  {unit} + '&appid=' + {apiKey}
-      );
-      let data = await api_call.json();
-      
+    // Toggle between Celcius (metric) and Fahrenheit (imperial)
+    let unit = "";
 
-      if (data.cod === 200) {
-        const deg = this.convertDir(data.wind.deg);
-        const sunRise = this.convertTime(data.sys.sunrise);
-        const sunSet = this.convertTime(data.sys.sunset);
+    if (toggleunit) {
+      unit = "metric";
+    } else {
+      unit = "imperial";
+    }
 
-        this.setState({
-          weather: data.weather["0"].description,
-          icon: data.weather["0"].icon,
-          city: data.name,
-          country: data.sys.country,
-          temp: data.main.temp,
-          feelsLike: data.main.feels_like,
-          humidity: data.main.humidity,
-          wind: data.wind.speed,
-          deg: deg,
-          sunRise: sunRise,
-          sunSet: sunSet,
-          latitude: data.coord.lat,
-          longitude: data.coord.lon,
-          error: "",
-        });
-      } else {
-        this.setState({
-          error: "Enter a city",
-        });
-      }
-    } else if (apiEndpoint === "forecast") {
-      const apiUrl = "https://api.openweathermap.org/data/2.5/";
-      const apiKey = "abafff9407e6299f362e6d1a0a127946";
-      let unit = "";
-      if (toggleunit) {
-        unit = "metric";
-      } else {
-        unit = "imperial";
-      }
+    // Weather API call
+    let api_call_weather = await fetch(
+      apiUrl + `weather?q=${query}&units=${unit}&appid=${apiKey}`
+    );
+    let weatherData = await api_call_weather.json();
 
-      let api_call = await fetch(
-        apiUrl + apiEndpoint + `?q=${query}&units=${unit}&appid=${apiKey}`
-        //{apiUrl} + {apiEndpoint} + '?q=' + {city} + '&units=' +  {unit} + '&appid=' + {apiKey}
-      );
+    // Forecast API call
+    let api_call_forecast = await fetch(
+      apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
+    );
 
-      let data = await api_call.json();
-      let myarray = [] = data.list;
+    let forecastData = await api_call_forecast.json();
+    let forecastDataArray = ([] = forecastData.list);
 
-      myarray.forEach((element) => {
-        this.progge.push(element.main.temp + "C");
-        this.progge.push(element.dt_txt);
-      });
+    // Set states (if data is fetched)
+    if (weatherData.cod === 200) {
+      let deg = this.convertDir(weatherData.wind.deg);
+      let sunRise = this.convertTime(weatherData.sys.sunrise);
+      let sunSet = this.convertTime(weatherData.sys.sunset);
 
+      // forecastDataArray.forEach((element) => {
+      //   this.forecastDataArray.push(element.main.temp + "C");
+      //   this.forecastDataArray.push(element.dt_txt);
+      // });
+      console.log(forecastData.list);
       this.setState({
-        prog: this.progge,
+        prog: forecastData.list,
+        weather: weatherData.weather["0"].description,
+        icon: weatherData.weather["0"].icon,
+        city: weatherData.name,
+        country: weatherData.sys.country,
+        temp: weatherData.main.temp,
+        feelsLike: weatherData.main.feels_like,
+        humidity: weatherData.main.humidity,
+        wind: weatherData.wind.speed,
+        deg: deg,
+        sunRise: sunRise,
+        sunSet: sunSet,
+        latitude: weatherData.coord.lat,
+        longitude: weatherData.coord.lon,
+        error: "",
+      });
+    } else {
+      this.setState({
+        error: "Enter a city",
       });
     }
   };
 
   render() {
     return (
-      <div>
-        <Nav callback={this.getWeather.bind(this)} />
-        <Jumbotron />
-        <Weather
-          weather={this.state.weather}
-          icon={this.state.icon}
-          city={this.state.city}
-          country={this.state.country}
-          temp={this.state.temp}
-          feelsLike={this.state.feelsLike}
-          humidity={this.state.humidity}
-          wind={this.state.wind}
-          deg={this.state.deg}
-          sunRise={this.state.sunRise}
-          sunSet={this.state.sunSet}
-          latitude={this.state.latitude}
-          longitude={this.state.longitude}
-          error={this.state.error}
-          toggleunit={this.state.toggleunit}
-          time={this.state.time}
-          prog={this.state.prog}
-        />
-
-        <div id="mainContainer">
-          <textarea
-            rows="1"
-            cols="20"
-            value={this.state.stad}
-            onChange={this.handleChange}
-          ></textarea>
-          <div>
-            <input
-              type="submit"
-              className="button"
-              onClick={this.prependData}
-              value="save this location"
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <Nav callback={this.getWeather.bind(this)} />
+          </div>
+        </div>
+        <main className="row">
+          <div className="col-12 mb-4">
+            <Jumbotron />
+          </div>
+          <div className="col-4">
+            <Weather
+              weather={this.state.weather}
+              icon={this.state.icon}
+              city={this.state.city}
+              country={this.state.country}
+              temp={this.state.temp}
+              feelsLike={this.state.feelsLike}
+              humidity={this.state.humidity}
+              wind={this.state.wind}
+              deg={this.state.deg}
+              sunRise={this.state.sunRise}
+              sunSet={this.state.sunSet}
+              latitude={this.state.latitude}
+              longitude={this.state.longitude}
+              error={this.state.error}
+              toggleunit={this.state.toggleunit}
+              time={this.state.time}
             />
           </div>
-          <div id="display-data-Container">{this.displayData}</div>
-        </div>
+
+          <div className="col-8">
+            <Forecast prog={this.state.prog} />
+          </div>
+
+          <div id="mainContainer">
+            <textarea
+              rows="1"
+              cols="20"
+              value={this.state.city}
+              onChange={this.handleChange}
+            ></textarea>
+            <div>
+              <input
+                type="submit"
+                className="button"
+                onClick={this.prependData}
+                value="Save this location"
+              />
+            </div>
+            <div id="display-data-Container">{this.displayData}</div>
+          </div>
+        </main>
+
+        <Footer />
       </div>
     );
   }

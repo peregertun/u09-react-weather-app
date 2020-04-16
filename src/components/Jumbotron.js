@@ -112,7 +112,7 @@ class Jumbotron extends React.Component {
     } = this.state;
 
     return (
-      <div className="col-12">
+      <div>
         {area && (
           <div className="jumbotron text-center bg-blue">
             <span className="text-uppercase">Your local weather at:</span>
@@ -154,7 +154,7 @@ class Jumbotron extends React.Component {
             </ul>
             {area && (
               <button href="/" className="btn btn-light float-right mt-2">
-                <span role="img" aria>
+                <span role="img" aria-label="Save location">
                   ♥️
                 </span>
                 Save location

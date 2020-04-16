@@ -3,7 +3,7 @@ import React from "react";
 class Weather extends React.Component {
   render() {
     return (
-      <div className="col-4 mt-2">
+      <div>
         {this.props.city && (
           <div className="card bg-green">
             <div className="card-body">
@@ -22,10 +22,12 @@ class Weather extends React.Component {
                 this.props.weather && (
                   <div>
                     <h4 className="mt-4">
-                      <span className="text-muted">Temperature:</span> <strong>{this.props.temp}&deg;</strong>
+                      <span className="text-muted">Temperature:</span>{" "}
+                      <strong>{this.props.temp}&deg;</strong>
                     </h4>
                     <p>
-                      This feels like: <strong>{this.props.feelsLike}&deg;</strong>
+                      This feels like:{" "}
+                      <strong>{this.props.feelsLike}&deg;</strong>
                     </p>
 
                     <img
@@ -60,20 +62,12 @@ class Weather extends React.Component {
 
                 {this.props.city && (
                   <button href="/" className="btn btn-light float-right mt-2">
-                    <span role="img" aria>♥️</span> Save location
+                    <span role="img" aria-label="Save location">
+                      ♥️
+                    </span>{" "}
+                    Save location
                   </button>
                 )}
-              <div
-                className="tab-pane fade"
-                id="profile"
-                role="tabpanel"
-                aria-labelledby="profile-tab"
-              >
-                <ul>
-                {this.props.prog.map((item) => (
-                  <li>{item}</li>
-                ))}
-                </ul>
               </div>
             </div>
           </div>

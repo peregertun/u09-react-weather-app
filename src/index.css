@@ -5,15 +5,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-main {
-  min-height: 1500px;
   background-image: url("clouds-background.jpg");
   background-color: white;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+main {
+  
 }
 
 code {
