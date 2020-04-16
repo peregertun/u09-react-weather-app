@@ -5,9 +5,73 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("clouds-background.jpg");
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+main {
+  
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.jumbotron {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  margin-bottom: 0;
+  background-color: #fff;
+}
+@media (min-width: 768px) {
+  .jumbotron {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+.jumbotron p:last-child {
+  margin-bottom: 0;
+}
+
+.jumbotron h1 {
+  font-weight: 300;
+}
+
+.jumbotron .container {
+  max-width: 40rem;
+}
+
+footer {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+footer p {
+  margin-bottom: .25rem;
+}
+
+.bg-lightblue {
+  background-color: rgb(212, 234, 234);
+}
+
+.bg-lightgreen {
+  background-color: rgb(212, 234, 227);
+}
+
+.bg-blue {
+  background-color: rgb(168, 206, 206);
+}
+
+.bg-green {
+  background-color: rgb(149, 196, 181);
+}
+
+.bg-grey {
+  background-color: rgb(222, 222, 222);
+}
+
