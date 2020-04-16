@@ -17,7 +17,7 @@ class Weather extends React.Component {
   // }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <div className="container">
         <div className="row">
@@ -126,7 +126,11 @@ class Weather extends React.Component {
                 role="tabpanel"
                 aria-labelledby="profile-tab"
               >
-                ...
+                <ul>
+                {this.props.prog.map((item) => (
+                  <li>{item}</li>
+                ))}
+                </ul>
               </div>
 
               <div
