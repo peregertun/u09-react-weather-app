@@ -63,6 +63,17 @@ class Weather extends React.Component {
                     <span role="img" aria>♥️</span> Save location
                   </button>
                 )}
+              <div
+                className="tab-pane fade"
+                id="profile"
+                role="tabpanel"
+                aria-labelledby="profile-tab"
+              >
+                <ul>
+                {this.props.prog.map((item) => (
+                  <li>{item}</li>
+                ))}
+                </ul>
               </div>
             </div>
           </div>
