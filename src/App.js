@@ -138,13 +138,12 @@ class App extends React.Component {
               </div>
             </div>
 
-            <Searchresult
-              callback={this.getWeather.bind(this)}
-              city={this.state.city}
-            />
-
             <div className="row">
               <div className="col-xl-4 col-12 mb-2">
+                <Searchresult
+                  callback={this.getWeather.bind(this)}
+                  city={this.state.city}
+                />
                 <Weather
                   weather={this.state.weather}
                   icon={this.state.icon}

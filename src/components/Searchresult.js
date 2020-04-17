@@ -32,23 +32,24 @@ class Searchresult extends React.Component {
               <strong>{this.props.city}</strong>
             </h3>
             <div>
-              <div
+              <button
                 onClick={this.saveLocation}
-                className="btn btn-light float-right mt-2"
+                className="btn btn-primary mt-2"
               >
                 <span role="img" aria-label="Save location">
                   ♥️
                 </span>
                 Save location
-              </div>
+              </button>
             </div>
-            <div>
-              <ul>
+            <div className="mt-5 mb-2">
+            <span className="text-uppercase mb-2">List of favorite cities:</span>
+              <ul className="list-unstyled">
                 {this.state.city.map((item) => {
                   return (
                     <li key={item}>
-                      <button onClick={() => this.handleClick(item)}>
-                        {item}
+                      <button className="btn btn-dark" onClick={() => this.handleClick(item)}>
+                        <strong>{item}</strong>
                       </button>
                     </li>
                   );
