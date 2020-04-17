@@ -87,19 +87,6 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
-  componentDidMount() {
-
-
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=stockholm&units=metric&appid=abafff9407e6299f362e6d1a0a127946`)
-      .then((res) => res.json())
-      .then((result) => {
-        this.setState({
-          prog: result
-        })
-      });
-
-
-  }
 
   // API call function
   getWeather = async (query = "stockholm", toggleunit = true) => {
@@ -215,9 +202,7 @@ class App extends React.Component {
           </div>
 
           <div className="col-8">
-            {typeof this.state.prog.list != "undefined" ? (
-              <Forecast prog={this.state.prog} />
-            ) : ("")}
+
           </div>
 
           <div id="mainContainer">

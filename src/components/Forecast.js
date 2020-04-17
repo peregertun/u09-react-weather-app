@@ -188,7 +188,7 @@ class Forecast extends Component {
         case day001:
           day1.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -196,7 +196,7 @@ class Forecast extends Component {
         case day002:
           day2.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -204,7 +204,7 @@ class Forecast extends Component {
         case day003:
           day3.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -212,7 +212,7 @@ class Forecast extends Component {
         case day004:
           day4.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -220,7 +220,7 @@ class Forecast extends Component {
         case day005:
           day5.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -228,7 +228,7 @@ class Forecast extends Component {
         case day006:
           day6.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -236,7 +236,7 @@ class Forecast extends Component {
         case day007:
           day7.push(
             <div className={forecastDay}>
-              <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
+              <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           )
           break;
@@ -245,7 +245,8 @@ class Forecast extends Component {
 
     return (
 
-      <div className="fullForecastWrapper">
+
+      < div className="fullForecastWrapper" >
 
         <div className="forecastWrapper">
 
@@ -302,7 +303,7 @@ class Forecast extends Component {
           )}
         </div>
 
-      </div>
+      </div >
     )
 
 
