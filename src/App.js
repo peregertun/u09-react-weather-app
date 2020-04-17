@@ -84,26 +84,23 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
-  componentDidMount() {
-
-
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=stockholm&units=metric&appid=abafff9407e6299f362e6d1a0a127946`)
-      .then((res) => res.json())
-      .then((result) => {
-        this.setState({
-          prog: result
-        })
-      });
-
-
-  }
+  // componentDidMount() {
+  //   fetch(
+  //     `https://api.openweathermap.org/data/2.5/forecast?q=stockholm&units=metric&appid=abafff9407e6299f362e6d1a0a127946`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       this.setState({
+  //         prog: result,
+  //       });
+  //       console.log(result);
+  //     });
+  // }
 
   // API call function
   getWeather = async (query = "", toggleunit = true) => {
     const apiUrl = "https://api.openweathermap.org/data/2.5/";
     const apiKey = "abafff9407e6299f362e6d1a0a127946";
-
-
 
     // Toggle between Celcius (metric) and Fahrenheit (imperial)
     let unit = "";
@@ -121,17 +118,11 @@ class App extends React.Component {
     let weatherData = await api_call_weather.json();
 
     // Forecast API call
-
     let api_call_forecast = await fetch(
       apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
     );
 
-
-
     let forecastData = await api_call_forecast.json();
-
-
-    let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
     if (weatherData.cod === 200) {
@@ -139,17 +130,15 @@ class App extends React.Component {
       let sunRise = this.convertTime(weatherData.sys.sunrise);
       let sunSet = this.convertTime(weatherData.sys.sunset);
 
-      console.log(forecastData.list);
-
-      for (let i = 0; i < forecastData.list.length; i++) {
-        let date = new Date(forecastData.list[i].dt * 1000);
-        let fullDate =
-          date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-        console.log(fullDate);
-      }
+      // for (let i = 0; i < forecastData.list.length; i++) {
+      //   let date = new Date(forecastData.list[i].dt * 1000);
+      //   let fullDate =
+      //     date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+      //   console.log(fullDate);
+      // }
 
       this.setState({
-        prog: forecastData.list,
+        prog: forecastData,
         weather: weatherData.weather["0"].description,
         icon: weatherData.weather["0"].icon,
         city: weatherData.name,
@@ -172,15 +161,7 @@ class App extends React.Component {
     }
   };
 
-
-
   render() {
-
-
-
-
-
-
     return (
       <div>
         <div className="container">
@@ -204,11 +185,6 @@ class App extends React.Component {
                       You searched for: <strong>{this.state.city}</strong>
                     </span>
                   )}
-          <div className="col-8">
-            {typeof this.state.prog.list != "undefined" ? (
-              <Forecast prog={this.state.prog} />
-            ) : ("")}
-          </div>
 
                   <div id="mainContainer">
                     {/* <textarea
@@ -256,9 +232,15 @@ class App extends React.Component {
                 />
               </div>
 
+              {this.state.city &&
               <div className="col-xl-8 col-12 mb-2">
-                <Forecast prog={this.state.prog} />
-              </div>
+                {typeof this.state.prog != "undefined" ? (
+                  <Forecast prog={this.state.prog} />
+                ) : (
+                  ""
+                )}
+              </div>}
+
             </div>
           </main>
         </div>

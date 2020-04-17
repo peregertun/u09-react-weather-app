@@ -12,7 +12,7 @@ class Forecast extends Component {
       /*deg: this.props.degrees,*/
       deg: "°c",
       temp: "",
-      weather: this.props.prog,
+      weather: "",
       showHide: "hide",
       day1: "hide",
       day2: "hide",
@@ -135,7 +135,7 @@ class Forecast extends Component {
     }
   }
 
-  render(props) {
+  render() {
 
     let day1 = [];
     let day2 = [];
@@ -187,7 +187,7 @@ class Forecast extends Component {
 
         case day001:
           day1.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -195,7 +195,7 @@ class Forecast extends Component {
 
         case day002:
           day2.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -203,7 +203,7 @@ class Forecast extends Component {
 
         case day003:
           day3.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -211,7 +211,7 @@ class Forecast extends Component {
 
         case day004:
           day4.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -219,7 +219,7 @@ class Forecast extends Component {
 
         case day005:
           day5.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -227,7 +227,7 @@ class Forecast extends Component {
 
         case day006:
           day6.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
@@ -235,16 +235,15 @@ class Forecast extends Component {
 
         case day007:
           day7.push(
-            <div className={forecastDay}>
+            <div className={forecastDay} key={forecastArray[i].dt}>
               <ForecastItem value={forecastArray[i]} degrees={this.props.degrees} />
             </div>
           )
           break;
       }
     }
-
+ 
     return (
-
       <div className="fullForecastWrapper">
 
         <div className="forecastWrapper">
