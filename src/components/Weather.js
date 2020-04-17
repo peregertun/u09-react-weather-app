@@ -60,15 +60,6 @@ class Weather extends React.Component {
                   )}
                   {this.props.error && <li>{this.props.error}</li>}
                 </ul>
-
-                {this.props.city && (
-                  <button href="/" className="btn btn-light float-right mt-2">
-                    <span role="img" aria-label="Save location">
-                      ♥️
-                    </span>{" "}
-                    Save location
-                  </button>
-                )}
               </div>
             </div>
           </div>

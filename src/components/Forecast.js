@@ -1,18 +1,15 @@
-import React, { Component } from 'react';
-import ForecastItem from "./ForecastItem"
-import styles from "./Forecast.css"
-
-
+import React, { Component } from "react";
+import ForecastItem from "./ForecastItem";
+import styles from "./Forecast.css";
 
 class Forecast extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       /*deg: this.props.degrees,*/
       deg: "°c",
       temp: "",
-      weather: this.props.prog,
+      weather: "",
       showHide: "hide",
       day1: "hide",
       day2: "hide",
@@ -22,15 +19,15 @@ class Forecast extends Component {
       day6: "hide",
       day7: "hide",
       lastDayCss: "lastDay",
-    }
+    };
   }
 
   setDay = (unixDate) => {
     let dateObj = new Date(unixDate * 1000);
     let utcString = dateObj.toUTCString();
     let day = utcString.slice(0, 3);
-    return day
-  }
+    return day;
+  };
 
   weatherInfo = () => {
     return (
@@ -41,102 +38,109 @@ class Forecast extends Component {
         <div>Wind</div>
         <div>Humidity</div>
       </div>
-    )
-  }
+    );
+  };
 
   showHide = (dayNumber) => {
     switch (dayNumber) {
       case 0:
         if (this.state.day1 === "hide") {
           this.setState({
-            day1: "show"
-          })
+            day1: "show",
+          });
           break;
         } else {
           this.setState({
-            day1: "hide"
-          })
+            day1: "hide",
+          });
           break;
         }
       case 1:
         if (this.state.day2 === "hide") {
           this.setState({
-            day2: "show"
-          })
+            day2: "show",
+          });
           break;
         } else {
           this.setState({
-            day2: "hide"
-          })
+            day2: "hide",
+          });
           break;
         }
       case 2:
         if (this.state.day3 === "hide") {
           this.setState({
-            day3: "show"
-          })
+            day3: "show",
+          });
           break;
         } else {
           this.setState({
-            day3: "hide"
-          })
+            day3: "hide",
+          });
           break;
         }
       case 3:
         if (this.state.day4 === "hide") {
           this.setState({
-            day4: "show"
-          })
+            day4: "show",
+          });
           break;
         } else {
           this.setState({
-            day4: "hide"
-          })
+            day4: "hide",
+          });
           break;
         }
       case 4:
         if (this.state.day5 === "hide") {
           this.setState({
-            day5: "show"
-          })
+            day5: "show",
+          });
           break;
         } else {
           this.setState({
-            day5: "hide"
-          })
+            day5: "hide",
+          });
           break;
         }
       case 5:
         if (this.state.day6 === "hide") {
           this.setState({
             day6: "show",
-            lastDayCss: "open"
-          })
+            lastDayCss: "open",
+          });
           break;
         } else {
           this.setState({
             day6: "hide",
-            lastDayCss: "lastDay"
-          })
+            lastDayCss: "lastDay",
+          });
           break;
         }
       case 6:
         if (this.state.day7 === "hide") {
           this.setState({
-            day7: "show"
-          })
+            day7: "show",
+          });
           break;
         } else {
           this.setState({
-            day7: "hide"
-          })
+            day7: "hide",
+          });
           break;
         }
     }
-  }
+  };
+
+  searchOrForecast = () => {
+    if (this.props.location === "show geoLocation") {
+      return "forecastDaySearch";
+    } else {
+      return "forecastDay";
+    }
+  };
 
   render(props) {
-
     let day1 = [];
     let day2 = [];
     let day3 = [];
@@ -150,160 +154,192 @@ class Forecast extends Component {
     const dateFunction = (date) => {
       let newUnix = date * 1000;
       let d = new Date(newUnix),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
         year = d.getFullYear();
 
-      if (month.length < 2)
-        month = '0' + month;
-      if (day.length < 2)
-        day = '0' + day;
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
 
-      return [day, month, year].join('-');
-    }
+      return [day, month, year].join("-");
+    };
 
     let daySeconds = 86400;
-    let day001 = dateFunction(forecastArray[0].dt)
-    let day002 = dateFunction(forecastArray[0].dt + daySeconds)
-    let day003 = dateFunction(forecastArray[0].dt + (daySeconds * 2))
-    let day004 = dateFunction(forecastArray[0].dt + (daySeconds * 3))
-    let day005 = dateFunction(forecastArray[0].dt + (daySeconds * 4))
-    let day006 = dateFunction(forecastArray[0].dt + (daySeconds * 5))
-    let day007 = dateFunction(forecastArray[0].dt + (daySeconds * 6))
+    let day001 = dateFunction(forecastArray[0].dt);
+    let day002 = dateFunction(forecastArray[0].dt + daySeconds);
+    let day003 = dateFunction(forecastArray[0].dt + daySeconds * 2);
+    let day004 = dateFunction(forecastArray[0].dt + daySeconds * 3);
+    let day005 = dateFunction(forecastArray[0].dt + daySeconds * 4);
+    let day006 = dateFunction(forecastArray[0].dt + daySeconds * 5);
+    let day007 = dateFunction(forecastArray[0].dt + daySeconds * 6);
 
     let date1 = this.setDay(forecastArray[0].dt);
     let date2 = this.setDay(forecastArray[0].dt + daySeconds);
-    let date3 = this.setDay(forecastArray[0].dt + (daySeconds * 2));
-    let date4 = this.setDay(forecastArray[0].dt + (daySeconds * 3));
-    let date5 = this.setDay(forecastArray[0].dt + (daySeconds * 4));
-    let date6 = this.setDay(forecastArray[0].dt + (daySeconds * 5));
-    let date7 = this.setDay(forecastArray[0].dt + (daySeconds * 6));
+    let date3 = this.setDay(forecastArray[0].dt + daySeconds * 2);
+    let date4 = this.setDay(forecastArray[0].dt + daySeconds * 3);
+    let date5 = this.setDay(forecastArray[0].dt + daySeconds * 4);
+    let date6 = this.setDay(forecastArray[0].dt + daySeconds * 5);
+    let date7 = this.setDay(forecastArray[0].dt + daySeconds * 6);
 
     for (let i = 0; i < forecastArray.length; i++) {
-
       let forecastDay = dateFunction(forecastArray[i].dt);
 
       switch (forecastDay) {
-
         case day001:
           day1.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day002:
           day2.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day003:
           day3.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day004:
           day4.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day005:
           day5.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day006:
           day6.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
 
         case day007:
           day7.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
-          )
+          );
           break;
       }
     }
 
-
-
     return (
-
-
-      < div className="fullForecastWrapper" >
+      <div className="fullForecastWrapper">
         {typeof this.props.location != "undefined" ? (
           <>
-            <div className="forecastTitle">{this.props.prog.city.name} {this.props.prog.city.country}</div>
+            <div className="forecastTitle">
+              {this.props.prog.city.name} {this.props.prog.city.country}
+            </div>
             <div className="date">Forecast</div>
           </>
-        ) : ("")}
-        < div className="forecastWrapper">
-
-
-
+        ) : (
+          ""
+        )}
+        <div className="forecastWrapper">
           <div>
-            <div className="forecastDay dayOne" onClick={() => this.showHide(0)}>{date1} {day001}</div>
+            <div
+              className={`${this.searchOrForecast()} "dayOne"`}
+              onClick={() => this.showHide(0)}
+            >
+              {date1} {day001}
+            </div>
             <div className={this.state.day1}>
               {this.weatherInfo()}
               {day1}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(1)}>{date2} {day002}</div>
+            <div
+              className={this.searchOrForecast()}
+              onClick={() => this.showHide(1)}
+            >
+              {date2} {day002}
+            </div>
             <div className={this.state.day2}>
               {this.weatherInfo()}
               {day2}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(2)}>{date3} {day003}</div>
+            <div
+              className={this.searchOrForecast()}
+              onClick={() => this.showHide(2)}
+            >
+              {date3} {day003}
+            </div>
             <div className={this.state.day3}>
               {this.weatherInfo()}
               {day3}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(3)}>{date4} {day004}</div>
+            <div
+              className={this.searchOrForecast()}
+              onClick={() => this.showHide(3)}
+            >
+              {date4} {day004}
+            </div>
             <div className={this.state.day4}>
               {this.weatherInfo()}
               {day4}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(4)}>{date5} {day005}</div>
+            <div
+              className={this.searchOrForecast()}
+              onClick={() => this.showHide(4)}
+            >
+              {date5} {day005}
+            </div>
             <div className={this.state.day5}>
               {this.weatherInfo()}
               {day5}
             </div>
           </div>
           <div>
-            <div className={`forecastDay ${this.state.lastDayCss}`} onClick={() => this.showHide(5)}>{date6} {day006}</div>
+            <div
+              className={`${this.searchOrForecast()} ${this.state.lastDayCss}`}
+              onClick={() => this.showHide(5)}
+            >
+              {date6} {day006}
+            </div>
             <div className={this.state.day6}>
               {this.weatherInfo()}
               {day6}
             </div>
           </div>
-          {typeof day7[0] == "undefined" ? ("") : (
+          {typeof day7[0] == "undefined" ? (
+            ""
+          ) : (
             <div>
-              <div className={`forecastDay ${this.state.lastDayCss}`} onClick={() => this.showHide(6)}>{date7} {day007}</div>
+              <div
+                className={`${this.searchOrForecast()} ${
+                  this.state.lastDayCss
+                }`}
+                onClick={() => this.showHide(6)}
+              >
+                {date7} {day007}
+              </div>
               <div className={this.state.day7}>
                 {this.weatherInfo()}
                 {day7}
@@ -311,13 +347,9 @@ class Forecast extends Component {
             </div>
           )}
         </div>
-
-      </div >
-    )
-
-
+      </div>
+    );
   }
 }
 
-
-export default Forecast
+export default Forecast;

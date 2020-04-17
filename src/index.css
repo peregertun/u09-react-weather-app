@@ -10,10 +10,7 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-main {
-  
+  padding-bottom: 124px;
 }
 
 code {
@@ -26,12 +23,17 @@ code {
   padding-bottom: 3rem;
   margin-bottom: 0;
   background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125)
 }
 @media (min-width: 768px) {
   .jumbotron {
     padding-top: 5rem;
     padding-bottom: 5rem;
   }
+}
+
+nav {
+  border-radius: .25rem;
 }
 
 .jumbotron p:last-child {
@@ -64,7 +66,7 @@ footer p {
 }
 
 .bg-blue {
-  background-color: rgb(168, 206, 206);
+  background-color: rgb(117, 190, 190);
 }
 
 .bg-green {
