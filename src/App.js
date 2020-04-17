@@ -96,13 +96,6 @@ class App extends React.Component {
       let sunRise = this.convertTime(weatherData.sys.sunrise);
       let sunSet = this.convertTime(weatherData.sys.sunset);
 
-      // for (let i = 0; i < forecastData.list.length; i++) {
-      //   let date = new Date(forecastData.list[i].dt * 1000);
-      //   let fullDate =
-      //     date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-      //   console.log(fullDate);
-      // }
-
       this.setState({
         prog: forecastData,
         weather: weatherData.weather["0"].description,
@@ -127,7 +120,6 @@ class App extends React.Component {
         error: "Enter a city",
       });
     }
-    console.log("ge oss väder");
   };
 
   render() {

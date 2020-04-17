@@ -187,7 +187,7 @@ class Forecast extends Component {
       switch (forecastDay) {
         case day001:
           day1.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -195,7 +195,7 @@ class Forecast extends Component {
 
         case day002:
           day2.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -203,7 +203,7 @@ class Forecast extends Component {
 
         case day003:
           day3.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -211,7 +211,7 @@ class Forecast extends Component {
 
         case day004:
           day4.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -219,7 +219,7 @@ class Forecast extends Component {
 
         case day005:
           day5.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -227,7 +227,7 @@ class Forecast extends Component {
 
         case day006:
           day6.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );
@@ -235,7 +235,7 @@ class Forecast extends Component {
 
         case day007:
           day7.push(
-            <div className={forecastDay}>
+            <div key={forecastArray[i].dt} className={forecastDay}>
               <ForecastItem value={forecastArray[i]} unit={this.props.unit} />
             </div>
           );

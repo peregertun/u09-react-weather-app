@@ -94,7 +94,6 @@ class Jumbotron extends React.Component {
         unit: unit
       })
     }
-    console.log("Jumbotronjävel");
   }
 
 
