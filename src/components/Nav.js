@@ -27,7 +27,7 @@ class Nav extends React.Component {
         <a className="navbar-brand" href="/">
           Weather App
         </a>
-        <button
+        {/* <button
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
@@ -37,9 +37,9 @@ class Nav extends React.Component {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
-        </button>
+        </button> */}
 
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="navbar-collapse" id="navbarSupportedContent">
           <div className="navbar-nav mr-auto">- Built in React</div>
           <Form
             handleSubmit={this.handleSubmit}

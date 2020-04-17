@@ -3,6 +3,7 @@ import Nav from "./components/Nav";
 import Jumbotron from "./components/Jumbotron";
 import Weather from "./components/Weather";
 import Forecast from "./components/Forecast";
+import Searchresult from "./components/Searchresult";
 import Footer from "./components/Footer";
 
 import "./App.css";
@@ -10,36 +11,12 @@ import "./App.css";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.displayData = [];
     this.forecastDataArray = [];
 
     this.state = {
-      showData: this.displayData,
       city: undefined,
       prog: this.forecastDataArray,
     };
-    this.prependData = this.prependData.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  prependData() {
-    this.displayData.unshift(
-      <div id="display-data" key="1">
-        <pre>{this.state.city}</pre>
-      </div>
-    );
-    this.setState({
-      showData: this.displayData,
-      city: "",
-    });
-    let query = this.displayData["0"].props.children.props.children;
-    this.getWeather(query);
-  }
-  handleChange(e) {
-    let getTextAreaValue = e.target.value;
-    this.setState({
-      city: getTextAreaValue,
-    });
   }
 
   // Tool box
@@ -84,23 +61,10 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
-  // componentDidMount() {
-  //   fetch(
-  //     `https://api.openweathermap.org/data/2.5/forecast?q=stockholm&units=metric&appid=abafff9407e6299f362e6d1a0a127946`
-  //   )
-  //     .then((res) => res.json())
-  //     .then((result) => {
-  //       this.setState({
-  //         prog: result,
-  //       });
-  //       console.log(result);
-  //     });
-  // }
-
   // API call function
   getWeather = async (query = "", toggleunit = true) => {
     const apiUrl = "https://api.openweathermap.org/data/2.5/";
-    const apiKey = "abafff9407e6299f362e6d1a0a127946";
+    const apiKey = "61dab6fb7df22a0d9bb49a92808e8af1";
 
     // Toggle between Celcius (metric) and Fahrenheit (imperial)
     let unit = "";
@@ -163,6 +127,7 @@ class App extends React.Component {
         error: "Enter a city",
       });
     }
+    console.log("ge oss väder");
   };
 
   render() {
@@ -181,38 +146,10 @@ class App extends React.Component {
               </div>
             </div>
 
-            <div className="row">
-              <div className="col-12">
-                <div className="card mb-2 p-4 bg-dark text-light">
-                  {this.state.city && (
-                    <span className="text-uppercase text-center">
-                      You searched for: <strong>{this.state.city}</strong>
-                    </span>
-                  )}
-
-                  <div id="mainContainer">
-                    {/* <textarea
-                      rows="1"
-                      cols="20"
-                      value={this.state.city}
-                      onChange={this.handleChange}
-                    ></textarea> */}
-                    <button
-                      type="submit"
-                      className="btn btn-light float-right"
-                      onClick={this.prependData}
-                    >
-                      <span role="img" aria-label="Save location">
-                        ♥️
-                      </span>
-                      Save location
-                    </button>
-                    <div></div>
-                    <div id="display-data-Container">{this.displayData}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Searchresult
+              callback={this.getWeather.bind(this)}
+              city={this.state.city}
+            />
 
             <div className="row">
               <div className="col-xl-4 col-12 mb-2">

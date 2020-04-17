@@ -1,7 +1,7 @@
 import React from "react";
 
 const Form = (props) => (
-  <form className="form-inline my-2 my-lg-0" onSubmit={props.handleSubmit}>
+  <form className="form-inline my-2 my-lg-0 float-right" onSubmit={props.handleSubmit}>
     <input
       className="form-control mr-sm-2"
       type="text"

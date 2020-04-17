@@ -25,7 +25,7 @@ class Jumbotron extends React.Component {
     } else {
       unit = "imperial";
     }
-    const API_KEY = "abafff9407e6299f362e6d1a0a127946";
+    const API_KEY = "61dab6fb7df22a0d9bb49a92808e8af1";
     const api_call = await fetch(
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${unit}&&appid=${API_KEY}`
     );
@@ -94,6 +94,7 @@ class Jumbotron extends React.Component {
         unit: unit
       })
     }
+    console.log("Jumbotronjävel");
   }
 
 

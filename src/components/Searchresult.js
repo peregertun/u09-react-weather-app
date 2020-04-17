@@ -1,37 +1,69 @@
-
 import React from "react";
+import PropTypes from "prop-types";
 
-const Searchresult = () => (
+class Searchresult extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      city: [],
+    };
 
-<div className="row">
-    <div className="col-12">
-    <div className="card mb-2 p-1 bg-dark text-light">
-        {this.state.city && (
-        <span className="text-uppercase text-center">
-            You searched for: <strong>{this.state.city}</strong>
-        </span>
+    this.saveLocation = this.saveLocation.bind(this);
+  }
+  
+  // Save location into city state
+  saveLocation() {
+    this.savedLocations = this.state.city;
+    this.savedLocations.push(this.props.city);
+    this.setState({ city: this.savedLocations });
+  }
+
+  handleClick(city) {
+    this.props.callback(city);
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.city && (
+          <div className="card mb-2 text-center bg-dark text-light p-4">
+            <span className="text-uppercase">You searched for:</span>
+            <h3 className="text-uppercase">
+              <strong>{this.props.city}</strong>
+            </h3>
+            <div>
+              <div
+                onClick={this.saveLocation}
+                className="btn btn-light float-right mt-2"
+              >
+                <span role="img" aria-label="Save location">
+                  ♥️
+                </span>
+                Save location
+              </div>
+            </div>
+            <div>
+              <ul>
+                {this.state.city.map((item) => {
+                  return (
+                    <li key={item}>
+                      <button onClick={() => this.handleClick(item)}>
+                        {item}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         )}
+      </div>
+    );
+  }
+}
 
-        <div id="mainContainer">
-        <textarea
-            rows="1"
-            cols="20"
-            value={this.state.city}
-            onChange={this.handleChange}
-        ></textarea>
-        <div>
-            <input
-            type="submit"
-            className="button"
-            onClick={this.prependData}
-            value="Save this location"
-            />
-        </div>
-        <div id="display-data-Container">{this.displayData}</div>
-        </div>
-    </div>
-    </div>
-</div>
-);
+Searchresult.protoTypes = {
+  callback: PropTypes.func,
+};
 
 export default Searchresult;
