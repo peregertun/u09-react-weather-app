@@ -1,4 +1,6 @@
 import React from "react";
+import Forecast from "./Forecast";
+import Graph from "./Graph";
 
 class Jumbotron extends React.Component {
   constructor() {
@@ -29,6 +31,12 @@ class Jumbotron extends React.Component {
       `http://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=${unit}&&appid=${API_KEY}`
     );
     const data = await api_call.json();
+
+    const api_forecast_call = await fetch(
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=${unit}&&appid=${API_KEY}`
+    );
+
+    const forecast_data = await api_forecast_call.json();
 
     let deg = convertWindDir(data.wind.deg);
     let sunRise = convertTime(data.sys.sunrise);
@@ -83,6 +91,12 @@ class Jumbotron extends React.Component {
         sunSet: sunSet,
       });
     }
+    if (forecast_data) {
+      this.setState({
+        forecast: forecast_data,
+        unit: unit,
+      });
+    }
   }
 
   ToggleUnits = (latitude, longitude) => {
@@ -109,8 +123,10 @@ class Jumbotron extends React.Component {
       sunSet,
       latitude,
       longitude,
+      forecast,
+      unit,
     } = this.state;
-
+    // console.log(forecast);
     return (
       <div>
         {area && (
@@ -162,6 +178,8 @@ class Jumbotron extends React.Component {
             )}
           </div>
         )}
+        {forecast && <Forecast prog={forecast} unit={unit} />}
+        {forecast && <Graph prog={forecast} />}
       </div>
     );
   }

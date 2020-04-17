@@ -87,10 +87,13 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
+
   // API call function
   getWeather = async (query = "stockholm", toggleunit = true) => {
     const apiUrl = "https://api.openweathermap.org/data/2.5/";
     const apiKey = "abafff9407e6299f362e6d1a0a127946";
+
+
 
     // Toggle between Celcius (metric) and Fahrenheit (imperial)
     let unit = "";
@@ -108,11 +111,19 @@ class App extends React.Component {
     let weatherData = await api_call_weather.json();
 
     // Forecast API call
+
     let api_call_forecast = await fetch(
       apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
     );
 
+
+
     let forecastData = await api_call_forecast.json();
+
+
+
+
+
     let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
@@ -121,11 +132,13 @@ class App extends React.Component {
       let sunRise = this.convertTime(weatherData.sys.sunrise);
       let sunSet = this.convertTime(weatherData.sys.sunset);
 
+
+
       // forecastDataArray.forEach((element) => {
       //   this.forecastDataArray.push(element.main.temp + "C");
       //   this.forecastDataArray.push(element.dt_txt);
       // });
-      console.log(forecastData.list);
+
       this.setState({
         prog: forecastData.list,
         weather: weatherData.weather["0"].description,
@@ -142,6 +155,8 @@ class App extends React.Component {
         latitude: weatherData.coord.lat,
         longitude: weatherData.coord.lon,
         error: "",
+        prog: forecastData,
+        unit: unit
       });
     } else {
       this.setState({
@@ -150,7 +165,15 @@ class App extends React.Component {
     }
   };
 
+
+
   render() {
+
+
+
+
+
+
     return (
       <div className="container">
         <div className="row">
@@ -184,7 +207,9 @@ class App extends React.Component {
           </div>
 
           <div className="col-8">
-            <Forecast prog={this.state.prog} />
+            {this.state.prog.cod && (
+              <Forecast prog={this.state.prog} unit={this.state.unit} location={"show geoLocation"} />
+            )}
           </div>
 
           <div id="mainContainer">
