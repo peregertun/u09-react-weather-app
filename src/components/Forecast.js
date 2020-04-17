@@ -20,18 +20,7 @@ class Forecast extends React.Component {
                 />
               </li>
             ))}
-          </ul>
-
-          <div>
-            {this.props.city && (
-              <button href="/" className="btn btn-light float-right mt-2">
-                <span role="img" aria-label="Save location">
-                  ♥️
-                </span>
-                Save location
-              </button>
-            )}
-          </div>
+          </ul>          
         </div>
       </div>
     );

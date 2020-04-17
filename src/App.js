@@ -169,7 +169,7 @@ class App extends React.Component {
 
             <div className="row">
               <div className="col-12">
-                <div className="card mb-2 p-1 bg-dark text-light">
+                <div className="card mb-2 p-4 bg-dark text-light">
                   {this.state.city && (
                     <span className="text-uppercase text-center">
                       You searched for: <strong>{this.state.city}</strong>
@@ -177,20 +177,23 @@ class App extends React.Component {
                   )}
 
                   <div id="mainContainer">
-                    <textarea
+                    {/* <textarea
                       rows="1"
                       cols="20"
                       value={this.state.city}
                       onChange={this.handleChange}
-                    ></textarea>
-                    <div>
-                      <input
-                        type="submit"
-                        className="button"
-                        onClick={this.prependData}
-                        value="Save this location"
-                      />
-                    </div>
+                    ></textarea> */}
+                    <button
+                      type="submit"
+                      className="btn btn-light float-right"
+                      onClick={this.prependData}
+                    >
+                      <span role="img" aria-label="Save location">
+                        ♥️
+                      </span>
+                      Save location
+                    </button>
+                    <div></div>
                     <div id="display-data-Container">{this.displayData}</div>
                   </div>
                 </div>

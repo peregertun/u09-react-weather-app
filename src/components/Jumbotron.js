@@ -157,14 +157,14 @@ class Jumbotron extends React.Component {
                   </li>
                 )}
               </ul>
-              {area && (
+              {/* {area && (
                 <button href="/" className="btn btn-light float-right mt-2">
                   <span role="img" aria-label="Save location">
                     ♥️
                   </span>
                   Save location
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         )}
