@@ -2,38 +2,38 @@ import React from "react";
 
 class Forecast extends React.Component {
   render() {
-    
     return (
-        <div className="card bg-grey">
-          <div className="card-body">
+      <div className="card bg-grey">
+        <div className="card-body">
+          <ul className="list-unstyled">
+            {this.props.prog.map((item) => (
+              <li key={item["dt"]} data-date={item.dt_txt}>
+                {item.dt_txt}
+                {item.main.temp}
+                {item.main.feels_like}
 
-            <ul className="list-unstyled">
-              {this.props.prog.map((item) => (
-                <li key={item['dt']}>
-                  {item.dt_txt}
-                  {item.dt_txt}
-                  {item.dt_txt}
-                  {item.dt_txt}
-                  {item.dt_txt}
-                  {item.dt_txt}
+                <img
+                  src={`http://openweathermap.org/img/wn/${item.weather[0].icon}@2x.png`}
+                  alt="Icon"
+                  width="50"
+                  height="50"
+                />
+              </li>
+            ))}
+          </ul>
 
-                </li>
-              ))
-              }
-            </ul>
-
-            <div>
-              {this.props.city && (
-                <button href="/" className="btn btn-light float-right mt-2">
-                  <span role="img" aria-label="Save location">
-                    ♥️
-                  </span>
-                  Save location
-                </button>
-              )}
-            </div>
+          <div>
+            {this.props.city && (
+              <button href="/" className="btn btn-light float-right mt-2">
+                <span role="img" aria-label="Save location">
+                  ♥️
+                </span>
+                Save location
+              </button>
+            )}
           </div>
         </div>
+      </div>
     );
   }
 }
