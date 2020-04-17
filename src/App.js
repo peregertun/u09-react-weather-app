@@ -33,10 +33,7 @@ class App extends React.Component {
       city: "",
     });
     let query = this.displayData["0"].props.children.props.children;
-    this.getWeather(query, "forecast", true);
-
-    // DENNA MÅSTE ÄNDRAS TILL FORECAST FÖR ATT MAN SKA KUNNA FÅ PROGNOSEN!
-    //ÄR DEN WEATHER FÅR MAN NUVARANDE VÄDER
+    this.getWeather(query);
   }
   handleChange(e) {
     let getTextAreaValue = e.target.value;
@@ -87,8 +84,21 @@ class App extends React.Component {
     this.getWeather(this.latitude, this.longitude, this.state.toggleunit);
   };
 
+  // componentDidMount() {
+  //   fetch(
+  //     `https://api.openweathermap.org/data/2.5/forecast?q=stockholm&units=metric&appid=abafff9407e6299f362e6d1a0a127946`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((result) => {
+  //       this.setState({
+  //         prog: result,
+  //       });
+  //       console.log(result);
+  //     });
+  // }
+
   // API call function
-  getWeather = async (query = "stockholm", toggleunit = true) => {
+  getWeather = async (query = "", toggleunit = true) => {
     const apiUrl = "https://api.openweathermap.org/data/2.5/";
     const apiKey = "abafff9407e6299f362e6d1a0a127946";
 
@@ -113,7 +123,6 @@ class App extends React.Component {
     );
 
     let forecastData = await api_call_forecast.json();
-    let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
     if (weatherData.cod === 200) {
@@ -121,13 +130,15 @@ class App extends React.Component {
       let sunRise = this.convertTime(weatherData.sys.sunrise);
       let sunSet = this.convertTime(weatherData.sys.sunset);
 
-      // forecastDataArray.forEach((element) => {
-      //   this.forecastDataArray.push(element.main.temp + "C");
-      //   this.forecastDataArray.push(element.dt_txt);
-      // });
-      console.log(forecastData.list);
+      // for (let i = 0; i < forecastData.list.length; i++) {
+      //   let date = new Date(forecastData.list[i].dt * 1000);
+      //   let fullDate =
+      //     date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+      //   console.log(fullDate);
+      // }
+
       this.setState({
-        prog: forecastData.list,
+        prog: forecastData,
         weather: weatherData.weather["0"].description,
         icon: weatherData.weather["0"].icon,
         city: weatherData.name,
@@ -152,60 +163,87 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <Nav callback={this.getWeather.bind(this)} />
-          </div>
-        </div>
-        <main className="row">
-          <div className="col-12 mb-4">
-            <Jumbotron />
-          </div>
-          <div className="col-4">
-            <Weather
-              weather={this.state.weather}
-              icon={this.state.icon}
-              city={this.state.city}
-              country={this.state.country}
-              temp={this.state.temp}
-              feelsLike={this.state.feelsLike}
-              humidity={this.state.humidity}
-              wind={this.state.wind}
-              deg={this.state.deg}
-              sunRise={this.state.sunRise}
-              sunSet={this.state.sunSet}
-              latitude={this.state.latitude}
-              longitude={this.state.longitude}
-              error={this.state.error}
-              toggleunit={this.state.toggleunit}
-              time={this.state.time}
-            />
-          </div>
-
-          <div className="col-8">
-            <Forecast prog={this.state.prog} />
-          </div>
-
-          <div id="mainContainer">
-            <textarea
-              rows="1"
-              cols="20"
-              value={this.state.city}
-              onChange={this.handleChange}
-            ></textarea>
-            <div>
-              <input
-                type="submit"
-                className="button"
-                onClick={this.prependData}
-                value="Save this location"
-              />
+      <div>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 mb-4 mt-4">
+              <Nav callback={this.getWeather.bind(this)} />
             </div>
-            <div id="display-data-Container">{this.displayData}</div>
           </div>
-        </main>
+          <main>
+            <div className="row">
+              <div className="col-12 mb-4">
+                <Jumbotron />
+              </div>
+            </div>
 
+            <div className="row">
+              <div className="col-12">
+                <div className="card mb-2 p-4 bg-dark text-light">
+                  {this.state.city && (
+                    <span className="text-uppercase text-center">
+                      You searched for: <strong>{this.state.city}</strong>
+                    </span>
+                  )}
+
+                  <div id="mainContainer">
+                    {/* <textarea
+                      rows="1"
+                      cols="20"
+                      value={this.state.city}
+                      onChange={this.handleChange}
+                    ></textarea> */}
+                    <button
+                      type="submit"
+                      className="btn btn-light float-right"
+                      onClick={this.prependData}
+                    >
+                      <span role="img" aria-label="Save location">
+                        ♥️
+                      </span>
+                      Save location
+                    </button>
+                    <div></div>
+                    <div id="display-data-Container">{this.displayData}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-xl-4 col-12 mb-2">
+                <Weather
+                  weather={this.state.weather}
+                  icon={this.state.icon}
+                  city={this.state.city}
+                  country={this.state.country}
+                  temp={this.state.temp}
+                  feelsLike={this.state.feelsLike}
+                  humidity={this.state.humidity}
+                  wind={this.state.wind}
+                  deg={this.state.deg}
+                  sunRise={this.state.sunRise}
+                  sunSet={this.state.sunSet}
+                  latitude={this.state.latitude}
+                  longitude={this.state.longitude}
+                  error={this.state.error}
+                  toggleunit={this.state.toggleunit}
+                  time={this.state.time}
+                />
+              </div>
+
+              {this.state.city &&
+              <div className="col-xl-8 col-12 mb-2">
+                {typeof this.state.prog != "undefined" ? (
+                  <Forecast prog={this.state.prog} />
+                ) : (
+                  ""
+                )}
+              </div>}
+
+            </div>
+          </main>
+        </div>
         <Footer />
       </div>
     );
