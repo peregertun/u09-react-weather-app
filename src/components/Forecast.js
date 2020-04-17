@@ -135,6 +135,14 @@ class Forecast extends Component {
     }
   }
 
+  searchOrForecast = () => {
+    if (this.props.location === "show geoLocation") {
+      return "forecastDaySearch"
+    } else {
+      return "forecastDay"
+    }
+  }
+
   render(props) {
 
     let day1 = [];
@@ -260,42 +268,42 @@ class Forecast extends Component {
 
 
           <div>
-            <div className="forecastDay dayOne" onClick={() => this.showHide(0)}>{date1} {day001}</div>
+            <div className={`${this.searchOrForecast()} "dayOne"`} onClick={() => this.showHide(0)}>{date1} {day001}</div>
             <div className={this.state.day1}>
               {this.weatherInfo()}
               {day1}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(1)}>{date2} {day002}</div>
+            <div className={this.searchOrForecast()} onClick={() => this.showHide(1)}>{date2} {day002}</div>
             <div className={this.state.day2}>
               {this.weatherInfo()}
               {day2}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(2)}>{date3} {day003}</div>
+            <div className={this.searchOrForecast()} onClick={() => this.showHide(2)}>{date3} {day003}</div>
             <div className={this.state.day3}>
               {this.weatherInfo()}
               {day3}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(3)}>{date4} {day004}</div>
+            <div className={this.searchOrForecast()} onClick={() => this.showHide(3)}>{date4} {day004}</div>
             <div className={this.state.day4}>
               {this.weatherInfo()}
               {day4}
             </div>
           </div>
           <div>
-            <div className="forecastDay" onClick={() => this.showHide(4)}>{date5} {day005}</div>
+            <div className={this.searchOrForecast()} onClick={() => this.showHide(4)}>{date5} {day005}</div>
             <div className={this.state.day5}>
               {this.weatherInfo()}
               {day5}
             </div>
           </div>
           <div>
-            <div className={`forecastDay ${this.state.lastDayCss}`} onClick={() => this.showHide(5)}>{date6} {day006}</div>
+            <div className={`${this.searchOrForecast()} ${this.state.lastDayCss}`} onClick={() => this.showHide(5)}>{date6} {day006}</div>
             <div className={this.state.day6}>
               {this.weatherInfo()}
               {day6}
@@ -303,7 +311,7 @@ class Forecast extends Component {
           </div>
           {typeof day7[0] == "undefined" ? ("") : (
             <div>
-              <div className={`forecastDay ${this.state.lastDayCss}`} onClick={() => this.showHide(6)}>{date7} {day007}</div>
+              <div className={`${this.searchOrForecast()} ${this.state.lastDayCss}`} onClick={() => this.showHide(6)}>{date7} {day007}</div>
               <div className={this.state.day7}>
                 {this.weatherInfo()}
                 {day7}

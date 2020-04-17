@@ -1,21 +1,23 @@
 .fullForecastWrapper {
-    font-family: "montseratt", sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
     
 }
 
 .forecastTitle {
     font-size: 40px;
     font-weight: 800;
-    color: white;
-    text-shadow: 1px 1px rgb(226, 226, 226, 0.5);
+    
+    
     text-align: center;
     
 }
 .date {
-    color: white;
+    
     font-weight: 400;
-    font-style: italic;
-    text-shadow: 1px 1px rgb(226, 226, 226, 0.5);
+    
+    
     margin: 10px 0px 20px 0px;
     text-align: center;
 }
@@ -24,13 +26,15 @@
     display: flex;
     flex-direction: row;
     align-content: space-around;
-    background-color: rgb(91, 90, 90);
+    background-color: rgb(212, 234, 234, 0.8);
     margin: 0 -20px;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 2px;
     height: 25px;
 }
+
+
 
 .weatherInfo div {
     justify-content: flex-start;
@@ -40,8 +44,8 @@
 }
 
 .forecastWrapper {
-    color: white;
-    text-shadow: 1px 1px rgba(164, 164, 164, 0.5);
+    
+    
     background-color: rgba(221, 221, 221, 0.4);
     width: 100%;
     margin: 0 auto;
@@ -51,28 +55,35 @@
     padding: 20px;
     padding-top: 0;
     padding-bottom: 0;
-    border-radius: 20px;
-    box-shadow: 4px 4px rgba(109, 109, 109, 0.5);
+    border-radius: 5px;
+    
 }
 
 .forecastDay {
-    background: rgba(31, 31, 31, 0.8);
+    background: rgba(212, 234, 234, 0.8);
     margin: 0 -20px;
     height: 30px;
     font-size: 20px;
     padding-top: 2px;
     text-align: center;
-    
-    
+}
 
+.forecastDaySearch {
+    
+    background: rgba(149, 196, 181, 0.8);
+    margin: 0 -20px;
+    height: 30px;
+    font-size: 20px;
+    padding-top: 2px;
+    text-align: center;
 }
 
 .dayOne {
-    border-radius: 20px 20px 0 0;
+    border-radius: 5px;
 }
 
 .lastDay {
-    border-radius: 0 0 20px 20px;
+    border-radius: 5px;
 }
 
 
