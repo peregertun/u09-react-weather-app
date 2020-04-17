@@ -16,6 +16,7 @@ class Searchresult extends React.Component {
     this.savedLocations = this.state.city;
     this.savedLocations.push(this.props.city);
     this.setState({ city: this.savedLocations });
+    localStorage.setItem('locationStorage', JSON.stringify(this.savedLocations));
   }
 
   handleClick(city) {
@@ -45,7 +46,7 @@ class Searchresult extends React.Component {
             <div className="mt-5 mb-2">
             <span className="text-uppercase mb-2">List of favorite cities:</span>
               <ul className="list-unstyled">
-                {this.state.city.map((item) => {
+                {JSON.parse(localStorage.getItem('locationStorage')).map((item) => {
                   return (
                     <li key={item}>
                       <button className="btn btn-dark" onClick={() => this.handleClick(item)}>
