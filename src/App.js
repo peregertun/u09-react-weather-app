@@ -124,6 +124,8 @@ class App extends React.Component {
 
     let forecastData = await api_call_forecast.json();
 
+    let forecastDataArray = ([] = forecastData.list);
+
     // Set states (if data is fetched)
     if (weatherData.cod === 200) {
       let deg = this.convertDir(weatherData.wind.deg);
@@ -153,6 +155,8 @@ class App extends React.Component {
         latitude: weatherData.coord.lat,
         longitude: weatherData.coord.lon,
         error: "",
+        prog: forecastData,
+        unit: unit,
       });
     } else {
       this.setState({
@@ -232,19 +236,19 @@ class App extends React.Component {
                 />
               </div>
 
-              {this.state.city &&
-              <div className="col-xl-8 col-12 mb-2">
-                {typeof this.state.prog != "undefined" ? (
-                  <Forecast prog={this.state.prog} />
-                ) : (
-                  ""
-                )}
-              </div>}
-
+              {this.state.city && (
+                <div className="col-xl-8 col-12 mb-2">
+                  {typeof this.state.prog != "undefined" ? (
+                    <Forecast prog={this.state.prog} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              )}
             </div>
           </main>
+          <Footer />
         </div>
-        <Footer />
       </div>
     );
   }

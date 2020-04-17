@@ -25,12 +25,44 @@ export class ForecastItem extends Component {
     };
 
     CF = () => {
-        if (this.props.degrees === "°c") {
-            return Math.round(this.props.value.main.temp)
-        } else if (this.props.degrees === "°f") {
-            return Math.round(this.props.value.main.temp * 1.8 + 32)
+        if (this.props.unit === "metric") {
+            return "C"
+        } else if (this.props.unit === "imperial") {
+            return "F"
         }
     }
+
+    windUnit = () => {
+        if (this.props.unit === "metric") {
+            return "m/s"
+        } else if (this.props.unit === "imperial") {
+            return "knot"
+        }
+    }
+
+    convertDir = (deg) => {
+        let compass = [
+            "N",
+            "NNE",
+            "NE",
+            "ENE",
+            "E",
+            "ESE",
+            "SE",
+            "SSE",
+            "S",
+            "SSW",
+            "SW",
+            "WSW",
+            "W",
+            "WNW",
+            "NW",
+            "NNW",
+            "N",
+        ];
+        const index = Math.round((deg % 360) / 22.5);
+        return compass[index];
+    };
 
     render(props) {
 
@@ -42,8 +74,8 @@ export class ForecastItem extends Component {
             <div className={`${currentDayFormated} allDays`}>
                 <div className="threeHourForecastItem">{this.timeBuilder(currentDay)}</div>
                 <div className="threeHourForecastItem">{value.weather[0].description}</div>
-                <div className="threeHourForecastItem">{this.CF()} {this.props.degrees}</div>
-                <div className="threeHourForecastItem">{value.wind.speed} m/s {value.wind.deg} deg</div>
+                <div className="threeHourForecastItem">{this.props.value.main.temp} {this.CF()}</div>
+                <div className="threeHourForecastItem">{value.wind.speed} {this.windUnit()} {value.wind.deg} {this.convertDir(this.props.value.wind.deg)}</div>
                 <div className="threeHourForecastItem">{value.main.humidity}</div>
             </div>
         )
