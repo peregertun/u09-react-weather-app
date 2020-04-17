@@ -121,6 +121,9 @@ class App extends React.Component {
     let forecastData = await api_call_forecast.json();
 
 
+
+
+
     let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
@@ -152,6 +155,8 @@ class App extends React.Component {
         latitude: weatherData.coord.lat,
         longitude: weatherData.coord.lon,
         error: "",
+        prog: forecastData,
+        unit: unit
       });
     } else {
       this.setState({
@@ -202,7 +207,9 @@ class App extends React.Component {
           </div>
 
           <div className="col-8">
-
+            {this.state.prog.cod && (
+              <Forecast prog={this.state.prog} unit={this.state.unit} location={"show geoLocation"} />
+            )}
           </div>
 
           <div id="mainContainer">

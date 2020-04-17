@@ -65,7 +65,7 @@ export class ForecastItem extends Component {
     };
 
     render(props) {
-        console.log(this.props)
+
         const { value } = this.props;
         const currentDay = new Date(value.dt * 1000);
         const currentDayFormated = this.dayBuilder(currentDay)

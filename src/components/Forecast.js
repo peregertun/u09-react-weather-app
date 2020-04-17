@@ -243,12 +243,21 @@ class Forecast extends Component {
       }
     }
 
+
+
     return (
 
 
       < div className="fullForecastWrapper" >
+        {typeof this.props.location != "undefined" ? (
+          <>
+            <div className="forecastTitle">{this.props.prog.city.name} {this.props.prog.city.country}</div>
+            <div className="date">Forecast</div>
+          </>
+        ) : ("")}
+        < div className="forecastWrapper">
 
-        <div className="forecastWrapper">
+
 
           <div>
             <div className="forecastDay dayOne" onClick={() => this.showHide(0)}>{date1} {day001}</div>
