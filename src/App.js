@@ -17,6 +17,7 @@ class App extends React.Component {
       showData: this.displayData,
       city: undefined,
       prog: this.forecastDataArray,
+      unit: "metric",
     };
     this.prependData = this.prependData.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -106,14 +107,14 @@ class App extends React.Component {
 
     // Weather API call
     let api_call_weather = await fetch(
-      apiUrl + `weather?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `weather?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
     let weatherData = await api_call_weather.json();
 
     // Forecast API call
 
     let api_call_forecast = await fetch(
-      apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `forecast?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
 
 
@@ -156,26 +157,50 @@ class App extends React.Component {
         longitude: weatherData.coord.lon,
         error: "",
         prog: forecastData,
-        unit: unit
+
       });
     } else {
       this.setState({
         error: "Enter a city",
       });
     }
+    console.log(weatherData)
   };
 
+  toggleUnit = () => {
 
+    if (this.state.unit === "metric") {
+      this.setState({
+        unit: "imperial"
+      })
+    } else if (this.state.unit === "imperial") {
+      this.setState({
+        unit: "metric"
+      })
+    }
+    setTimeout(function () { this.getWeather(); }.bind(this), 500);
+
+
+  }
+
+  ToggleUnitz = () => {
+    this.refs.jumbotron.toggleUnitsFromApp(this.state.latitude, this.state.longitude);
+    this.toggleUnit()
+  }
+
+  celFarButton = () => {
+    if (this.state.unit === "metric") {
+      return "C"
+    } else if (this.state.unit === "imperial") {
+      return "F"
+    }
+  }
 
   render() {
 
-
-
-
-
-
     return (
       <div className="container">
+        <button onClick={this.ToggleUnitz}>click -> {this.celFarButton()} to togle unit</button>
         <div className="row">
           <div className="col-12">
             <Nav callback={this.getWeather.bind(this)} />
@@ -183,7 +208,7 @@ class App extends React.Component {
         </div>
         <main className="row">
           <div className="col-12 mb-4">
-            <Jumbotron />
+            <Jumbotron ref="jumbotron" />
           </div>
           <div className="col-4">
             <Weather

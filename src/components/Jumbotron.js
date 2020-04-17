@@ -99,6 +99,7 @@ class Jumbotron extends React.Component {
 
 
   ToggleUnits = (latitude, longitude) => {
+
     this.setState((state) => ({
       toggleunit: !state.toggleunit,
       latitude: latitude,
@@ -106,6 +107,15 @@ class Jumbotron extends React.Component {
     }));
     this.getWeather(latitude, longitude, this.state.toggleunit);
   };
+
+  toggleUnitsFromApp = () => {
+    console.log("finc i jumbotron")
+    this.setState((state) => ({
+      toggleunit: !state.toggleunit,
+
+    }));
+    this.getWeather(this.state.latitude, this.state.longitude, this.state.toggleunit);
+  }
 
   render() {
     const {
