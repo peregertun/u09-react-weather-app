@@ -16,6 +16,7 @@ class App extends React.Component {
     this.state = {
       city: undefined,
       prog: this.forecastDataArray,
+      unit: "metric",
     };
   }
 
@@ -77,13 +78,13 @@ class App extends React.Component {
 
     // Weather API call
     let api_call_weather = await fetch(
-      apiUrl + `weather?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `weather?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
     let weatherData = await api_call_weather.json();
 
     // Forecast API call
     let api_call_forecast = await fetch(
-      apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `forecast?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
 
     let forecastData = await api_call_forecast.json();
@@ -113,23 +114,58 @@ class App extends React.Component {
         longitude: weatherData.coord.lon,
         error: "",
         prog: forecastData,
-        unit: unit,
+
       });
     } else {
       this.setState({
         error: "Enter a city",
       });
     }
+    console.log(weatherData)
   };
 
+  toggleUnit = () => {
+
+    if (this.state.unit === "metric") {
+      this.setState({
+        unit: "imperial"
+      })
+    } else if (this.state.unit === "imperial") {
+      this.setState({
+        unit: "metric"
+      })
+    }
+    setTimeout(function () { this.getWeather(); }.bind(this), 500);
+
+
+  }
+
+  ToggleUnitz = () => {
+    this.refs.jumbotron.toggleUnitsFromApp(this.state.latitude, this.state.longitude);
+    this.toggleUnit()
+  }
+
+  celFarButton = () => {
+    if (this.state.unit === "metric") {
+      return "C"
+    } else if (this.state.unit === "imperial") {
+      return "F"
+    }
+  }
+
   render() {
+
     return (
-      <div>
+      <div className="container">
+        <div className="row">
         <div className="container">
-          <div className="row">
-            <div className="col-12 mb-4 mt-4">
-              <Nav callback={this.getWeather.bind(this)} />
+        <div className="row">
+          <div className="col-12">
+            <Nav callback={this.getWeather.bind(this)} />
+            <div className="d-flex justify-content-center align-items-center mb-4 mt-4">
+              <span className="text-uppercase font-weight-bold">Choose temperature unit:</span><div className="ml-2 btn btn-primary font-weight-bold" onClick={this.ToggleUnitz}>{this.celFarButton()}</div>
             </div>
+          </div>
           </div>
           <main>
             <div className="row">
@@ -176,6 +212,7 @@ class App extends React.Component {
             </div>
           </main>
           <Footer />
+        </div>
         </div>
       </div>
     );
