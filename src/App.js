@@ -89,7 +89,7 @@ class App extends React.Component {
 
     let forecastData = await api_call_forecast.json();
 
-    let forecastDataArray = ([] = forecastData.list);
+    //let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
     if (weatherData.cod === 200) {
@@ -158,61 +158,61 @@ class App extends React.Component {
     return (
       <div className="container">
         <div className="row">
-        <div className="container">
-        <div className="row">
-          <div className="col-12">
-            <Nav callback={this.getWeather.bind(this)} />
-            <div className="d-flex justify-content-center align-items-center mb-4 mt-4">
-              <span className="text-uppercase font-weight-bold">Choose temperature unit:</span><div className="ml-2 btn btn-primary font-weight-bold" onClick={this.ToggleUnitz}>{this.celFarButton()}</div>
-            </div>
-          </div>
-          </div>
-          <main>
+          <div className="container">
             <div className="row">
-              <div className="col-12 mb-4">
-                <Jumbotron />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-xl-4 col-12 mb-2">
-                <Searchresult
-                  callback={this.getWeather.bind(this)}
-                  city={this.state.city}
-                />
-                <Weather
-                  weather={this.state.weather}
-                  icon={this.state.icon}
-                  city={this.state.city}
-                  country={this.state.country}
-                  temp={this.state.temp}
-                  feelsLike={this.state.feelsLike}
-                  humidity={this.state.humidity}
-                  wind={this.state.wind}
-                  deg={this.state.deg}
-                  sunRise={this.state.sunRise}
-                  sunSet={this.state.sunSet}
-                  latitude={this.state.latitude}
-                  longitude={this.state.longitude}
-                  error={this.state.error}
-                  toggleunit={this.state.toggleunit}
-                  time={this.state.time}
-                />
-              </div>
-
-              {this.state.city && (
-                <div className="col-xl-8 col-12 mb-2">
-                  {typeof this.state.prog != "undefined" ? (
-                    <Forecast prog={this.state.prog} />
-                  ) : (
-                    ""
-                  )}
+              <div className="col-12">
+                <Nav callback={this.getWeather.bind(this)} />
+                <div className="d-flex justify-content-center align-items-center mb-4 mt-4">
+                  <span className="text-uppercase font-weight-bold">Choose temperature unit:</span><div className="ml-2 btn btn-primary font-weight-bold" onClick={this.ToggleUnitz}>{this.celFarButton()}</div>
                 </div>
-              )}
+              </div>
             </div>
-          </main>
-          <Footer />
-        </div>
+            <main>
+              <div className="row">
+                <div className="col-12 mb-4">
+                  <Jumbotron ref="jumbotron" />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-xl-4 col-12 mb-2">
+                  <Searchresult
+                    callback={this.getWeather.bind(this)}
+                    city={this.state.city}
+                  />
+                  <Weather
+                    weather={this.state.weather}
+                    icon={this.state.icon}
+                    city={this.state.city}
+                    country={this.state.country}
+                    temp={this.state.temp}
+                    feelsLike={this.state.feelsLike}
+                    humidity={this.state.humidity}
+                    wind={this.state.wind}
+                    deg={this.state.deg}
+                    sunRise={this.state.sunRise}
+                    sunSet={this.state.sunSet}
+                    latitude={this.state.latitude}
+                    longitude={this.state.longitude}
+                    error={this.state.error}
+                    toggleunit={this.state.toggleunit}
+                    time={this.state.time}
+                  />
+                </div>
+
+                {this.state.city && (
+                  <div className="col-xl-8 col-12 mb-2">
+                    {typeof this.state.prog != "undefined" ? (
+                      <Forecast prog={this.state.prog} />
+                    ) : (
+                        ""
+                      )}
+                  </div>
+                )}
+              </div>
+            </main>
+            <Footer />
+          </div>
         </div>
       </div>
     );
