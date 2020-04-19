@@ -8,6 +8,8 @@ class Searchresult extends React.Component {
       city: [],
     };
 
+    localStorage.setItem("cityStorage", JSON.stringify(this.state.city));
+
     this.saveLocation = this.saveLocation.bind(this);
   }
 
@@ -19,15 +21,11 @@ class Searchresult extends React.Component {
     let alreadyExist = false;
 
     // Check if there's a localstorage
-    if (localStorage.getItem('cityStorage') === null) {
+    if (localStorage.getItem("cityStorage") === null) {
       this.setState({ city: this.savedLocations });
-      localStorage.setItem(
-        "cityStorage",
-        JSON.stringify(this.savedLocations)
-      );
-
+      localStorage.setItem("cityStorage", JSON.stringify(this.savedLocations));
     } else {
-      let cityStorage = JSON.parse(localStorage.getItem('cityStorage'));
+      let cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
 
       // Check if searched city alruady exists in localStorage
       for (let i = 0; i < cityStorage.length; i++) {
@@ -41,27 +39,21 @@ class Searchresult extends React.Component {
       if (!alreadyExist) {
         this.setState({ city: this.savedLocations });
         cityStorage.push(this.props.city);
-        localStorage.setItem(
-          "cityStorage",
-          JSON.stringify(cityStorage)
-        );
+        localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
       }
     }
   }
 
   // Remove city from localStorage and update state
   removeLocation(city) {
-    let cityStorage = JSON.parse(localStorage.getItem('cityStorage'));
+    let cityStorage = JSON.parse(localStorage.getItem("cityStorage"));
     for (let i = 0; i < cityStorage.length; i++) {
       if (cityStorage[i] === city) {
         cityStorage.splice(i, 1);
         i = 1000000000000000000;
       }
     }
-    localStorage.setItem(
-      "cityStorage",
-      JSON.stringify(cityStorage)
-    );
+    localStorage.setItem("cityStorage", JSON.stringify(cityStorage));
     this.setState({ city: cityStorage });
   }
 
@@ -95,25 +87,24 @@ class Searchresult extends React.Component {
                 List of favorite cities:
               </span>
               <ul className="list-unstyled">
-                {JSON.parse(localStorage.getItem("cityStorage")).map(
-                  (item) => {
-                    return (
-                      <li key={item}>
-                        <button
-                          className="btn btn-dark"
-                          onClick={() => this.handleClick(item)}
-                        >
-                          <strong>{item}</strong>
-                        </button>
-                        <div 
-                          onClick={() => this.removeLocation(item)}
-                          className="btn btn-sm btn-danger">
-                          <strong>X</strong>
-                        </div>
-                      </li>
-                    );
-                  }
-                )}
+                {JSON.parse(localStorage.getItem("cityStorage")).map((item) => {
+                  return (
+                    <li key={item}>
+                      <button
+                        className="btn btn-dark"
+                        onClick={() => this.handleClick(item)}
+                      >
+                        <strong>{item}</strong>
+                      </button>
+                      <div
+                        onClick={() => this.removeLocation(item)}
+                        className="btn btn-sm btn-danger"
+                      >
+                        <strong>X</strong>
+                      </div>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </div>
