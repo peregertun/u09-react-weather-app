@@ -110,7 +110,6 @@ class Jumbotron extends React.Component {
   };
 
   toggleUnitsFromApp = () => {
-    console.log("finc i jumbotron")
     this.setState((state) => ({
       toggleunit: !state.toggleunit,
 
@@ -136,7 +135,7 @@ class Jumbotron extends React.Component {
       forecast,
       unit,
     } = this.state;
-    // console.log(forecast);
+
     return (
       <div>
         <div className="card mb-2">

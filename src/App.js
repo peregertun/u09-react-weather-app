@@ -12,6 +12,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.forecastDataArray = [];
+    this.jumbotron = React.createRef();
 
     this.state = {
       city: undefined,
@@ -121,7 +122,6 @@ class App extends React.Component {
         error: "Enter a city",
       });
     }
-    console.log(weatherData)
   };
 
   toggleUnit = () => {
@@ -135,14 +135,16 @@ class App extends React.Component {
         unit: "metric"
       })
     }
-    setTimeout(function () { this.getWeather(); }.bind(this), 500);
+    setTimeout(function () { this.getWeather(this.state.city); }.bind(this), 500);
 
 
   }
 
   ToggleUnitz = () => {
-    this.refs.jumbotron.toggleUnitsFromApp(this.state.latitude, this.state.longitude);
-    this.toggleUnit()
+    this.jumbotron.current.toggleUnitsFromApp(this.state.latitude, this.state.longitude);
+    if (this.state.city) {
+      this.toggleUnit()
+    }
   }
 
   celFarButton = () => {
@@ -170,7 +172,7 @@ class App extends React.Component {
             <main>
               <div className="row">
                 <div className="col-12 mb-4">
-                  <Jumbotron ref="jumbotron" />
+                  <Jumbotron ref={this.jumbotron} />
                 </div>
               </div>
 
