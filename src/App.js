@@ -145,6 +145,15 @@ class App extends React.Component {
     if (this.state.city) {
       this.toggleUnit()
     }
+    if (this.state.unit === "metric") {
+      this.setState({
+        unit: "imperial"
+      })
+    } else if (this.state.unit === "imperial") {
+      this.setState({
+        unit: "metric"
+      })
+    }
   }
 
   celFarButton = () => {
