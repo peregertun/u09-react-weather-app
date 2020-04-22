@@ -33,9 +33,16 @@ class Graph extends React.Component {
     };
 
     return (
-      <div className="graph">
-        <div>
-          <Line data={chartData} />
+      <div>
+        <div className="mt-4">
+          <p className="text-uppercase text-center font-weight-bold">Graph over upcoming 5-day forecast</p>
+        </div>
+        <div className="graph">
+          <div className="card mb-2">
+          </div>
+          <div>
+            <Line data={chartData} />
+          </div>
         </div>
       </div>
     );

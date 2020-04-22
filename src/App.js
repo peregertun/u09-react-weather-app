@@ -12,10 +12,12 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.forecastDataArray = [];
+    this.jumbotron = React.createRef();
 
     this.state = {
       city: undefined,
       prog: this.forecastDataArray,
+      unit: "metric",
     };
   }
 
@@ -77,18 +79,18 @@ class App extends React.Component {
 
     // Weather API call
     let api_call_weather = await fetch(
-      apiUrl + `weather?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `weather?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
     let weatherData = await api_call_weather.json();
 
     // Forecast API call
     let api_call_forecast = await fetch(
-      apiUrl + `forecast?q=${query}&units=${unit}&appid=${apiKey}`
+      apiUrl + `forecast?q=${query}&units=${this.state.unit}&appid=${apiKey}`
     );
 
     let forecastData = await api_call_forecast.json();
 
-    let forecastDataArray = ([] = forecastData.list);
+    //let forecastDataArray = ([] = forecastData.list);
 
     // Set states (if data is fetched)
     if (weatherData.cod === 200) {
@@ -113,7 +115,7 @@ class App extends React.Component {
         longitude: weatherData.coord.lon,
         error: "",
         prog: forecastData,
-        unit: unit,
+
       });
     } else {
       this.setState({
@@ -122,60 +124,106 @@ class App extends React.Component {
     }
   };
 
+  toggleUnit = () => {
+
+    if (this.state.unit === "metric") {
+      this.setState({
+        unit: "imperial"
+      })
+    } else if (this.state.unit === "imperial") {
+      this.setState({
+        unit: "metric"
+      })
+    }
+    setTimeout(function () { this.getWeather(this.state.city); }.bind(this), 500);
+
+
+  }
+
+  ToggleUnitz = () => {
+    this.jumbotron.current.toggleUnitsFromApp(this.state.latitude, this.state.longitude);
+    if (this.state.city) {
+      this.toggleUnit()
+    }
+    if (this.state.unit === "metric") {
+      this.setState({
+        unit: "imperial"
+      })
+    } else if (this.state.unit === "imperial") {
+      this.setState({
+        unit: "metric"
+      })
+    }
+  }
+
+  celFarButton = () => {
+    if (this.state.unit === "metric") {
+      return "C"
+    } else if (this.state.unit === "imperial") {
+      return "F"
+    }
+  }
+
   render() {
+
     return (
-      <div>
-        <div className="container">
-          <div className="row">
-            <div className="col-12 mb-4 mt-4">
-              <Nav callback={this.getWeather.bind(this)} />
-            </div>
-          </div>
-          <main>
+      <div className="container">
+        <div className="row">
+          <div className="container">
             <div className="row">
-              <div className="col-12 mb-4">
-                <Jumbotron />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="col-xl-4 col-12 mb-2">
-                <Searchresult
-                  callback={this.getWeather.bind(this)}
-                  city={this.state.city}
-                />
-                <Weather
-                  weather={this.state.weather}
-                  icon={this.state.icon}
-                  city={this.state.city}
-                  country={this.state.country}
-                  temp={this.state.temp}
-                  feelsLike={this.state.feelsLike}
-                  humidity={this.state.humidity}
-                  wind={this.state.wind}
-                  deg={this.state.deg}
-                  sunRise={this.state.sunRise}
-                  sunSet={this.state.sunSet}
-                  latitude={this.state.latitude}
-                  longitude={this.state.longitude}
-                  error={this.state.error}
-                  toggleunit={this.state.toggleunit}
-                  time={this.state.time}
-                />
-              </div>
-
-              {this.state.city && (
-                <div className="col-xl-8 col-12 mb-2">
-                  {typeof this.state.prog != "undefined" ? (
-                    <Forecast prog={this.state.prog} />
-                  ) : (
-                    ""
-                  )}
+              <div className="col-12">
+                <Nav callback={this.getWeather.bind(this)} />
+                <div className="d-flex justify-content-center align-items-center mb-4 mt-4">
+                  <span className="text-uppercase font-weight-bold">Choose temperature unit:</span><div className="ml-2 btn btn-primary font-weight-bold" onClick={this.ToggleUnitz}>{this.celFarButton()}</div>
                 </div>
-              )}
+              </div>
             </div>
-          </main>
-          <Footer />
+            <main>
+              <div className="row">
+                <div className="col-12 mb-4">
+                  <Jumbotron ref={this.jumbotron} />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="col-xl-4 col-12 mb-2">
+                  <Searchresult
+                    callback={this.getWeather.bind(this)}
+                    city={this.state.city}
+                  />
+                  <Weather
+                    weather={this.state.weather}
+                    icon={this.state.icon}
+                    city={this.state.city}
+                    country={this.state.country}
+                    temp={this.state.temp}
+                    feelsLike={this.state.feelsLike}
+                    humidity={this.state.humidity}
+                    wind={this.state.wind}
+                    deg={this.state.deg}
+                    sunRise={this.state.sunRise}
+                    sunSet={this.state.sunSet}
+                    latitude={this.state.latitude}
+                    longitude={this.state.longitude}
+                    error={this.state.error}
+                    toggleunit={this.state.toggleunit}
+                    time={this.state.time}
+                  />
+                </div>
+
+                {this.state.city && (
+                  <div className="col-xl-8 col-12 mb-2">
+                    {typeof this.state.prog != "undefined" ? (
+                      <Forecast prog={this.state.prog} unit={this.state.unit} />
+                    ) : (
+                        ""
+                      )}
+                  </div>
+                )}
+              </div>
+            </main>
+            <Footer />
+          </div>
         </div>
       </div>
     );

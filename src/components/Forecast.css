@@ -8,16 +8,11 @@
 .forecastTitle {
     font-size: 40px;
     font-weight: 800;
-    
-    
     text-align: center;
     
 }
 .date {
-    
     font-weight: 400;
-    
-    
     margin: 10px 0px 20px 0px;
     text-align: center;
 }
@@ -26,32 +21,27 @@
     display: flex;
     flex-direction: row;
     align-content: space-around;
-    background-color: rgb(212, 234, 234, 0.8);
+    background-color: rgb(114, 149, 163);
     margin: 0 -20px;
     padding-left: 20px;
     padding-right: 20px;
     padding-top: 2px;
     height: 25px;
+    color: white;
+    text-transform: uppercase;
 }
-
-
 
 .weatherInfo div {
     justify-content: flex-start;
-    
     flex-basis: 20%;
     flex-shrink: 2;
 }
 
 .forecastWrapper {
-    
-    
-    background-color: rgba(221, 221, 221, 0.4);
+    background-color: rgb(180, 208, 219);
     width: 100%;
     margin: 0 auto;
     height: min-content;
-    
-    
     padding: 20px;
     padding-top: 0;
     padding-bottom: 0;
@@ -60,16 +50,18 @@
 }
 
 .forecastDay {
-    background: rgba(212, 234, 234, 0.8);
+    background-color: rgb(77, 113, 128);
+    color: white;
+    font-weight: bold;
     margin: 0 -20px;
     height: 30px;
-    font-size: 20px;
+    text-transform: uppercase;
     padding-top: 2px;
     text-align: center;
+    cursor: pointer;
 }
 
 .forecastDaySearch {
-    
     background: rgba(149, 196, 181, 0.8);
     margin: 0 -20px;
     height: 30px;
@@ -86,8 +78,6 @@
     border-radius: 5px;
 }
 
-
-
 .hide {
     display: none;
 }
@@ -95,5 +85,4 @@
 .show {
     display: flex;
     flex-direction: column;
-   
 }

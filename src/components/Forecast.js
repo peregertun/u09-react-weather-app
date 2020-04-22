@@ -244,108 +244,113 @@ class Forecast extends Component {
     }
 
     return (
-      <div className="fullForecastWrapper">
-        {typeof this.props.location != "undefined" ? (
-          <>
-            <div className="forecastTitle">
-              {this.props.prog.city.name} {this.props.prog.city.country}
-            </div>
-            <div className="date">Forecast</div>
-          </>
-        ) : (
-          ""
-        )}
-        <div className="forecastWrapper">
-          <div>
-            <div
-              className={`${this.searchOrForecast()} "dayOne"`}
-              onClick={() => this.showHide(0)}
-            >
-              {date1} {day001}
-            </div>
-            <div className={this.state.day1}>
-              {this.weatherInfo()}
-              {day1}
-            </div>
-          </div>
-          <div>
-            <div
-              className={this.searchOrForecast()}
-              onClick={() => this.showHide(1)}
-            >
-              {date2} {day002}
-            </div>
-            <div className={this.state.day2}>
-              {this.weatherInfo()}
-              {day2}
-            </div>
-          </div>
-          <div>
-            <div
-              className={this.searchOrForecast()}
-              onClick={() => this.showHide(2)}
-            >
-              {date3} {day003}
-            </div>
-            <div className={this.state.day3}>
-              {this.weatherInfo()}
-              {day3}
-            </div>
-          </div>
-          <div>
-            <div
-              className={this.searchOrForecast()}
-              onClick={() => this.showHide(3)}
-            >
-              {date4} {day004}
-            </div>
-            <div className={this.state.day4}>
-              {this.weatherInfo()}
-              {day4}
-            </div>
-          </div>
-          <div>
-            <div
-              className={this.searchOrForecast()}
-              onClick={() => this.showHide(4)}
-            >
-              {date5} {day005}
-            </div>
-            <div className={this.state.day5}>
-              {this.weatherInfo()}
-              {day5}
-            </div>
-          </div>
-          <div>
-            <div
-              className={`${this.searchOrForecast()} ${this.state.lastDayCss}`}
-              onClick={() => this.showHide(5)}
-            >
-              {date6} {day006}
-            </div>
-            <div className={this.state.day6}>
-              {this.weatherInfo()}
-              {day6}
-            </div>
-          </div>
-          {typeof day7[0] == "undefined" ? (
-            ""
+      <div>
+        <div className="mt-4">
+          <p className="text-uppercase text-center font-weight-bold">Upcoming 5-day forecast:</p>
+        </div>
+        <div className="fullForecastWrapper">
+          {typeof this.props.location != "undefined" ? (
+            <>
+              <div className="forecastTitle">
+                {this.props.prog.city.name} {this.props.prog.city.country}
+              </div>
+              <div className="date">Forecast</div>
+            </>
           ) : (
+            ""
+          )}
+          <div className="forecastWrapper">
             <div>
               <div
-                className={`${this.searchOrForecast()} ${
-                  this.state.lastDayCss
-                }`}
-                onClick={() => this.showHide(6)}
+                className={`${this.searchOrForecast()} "dayOne"`}
+                onClick={() => this.showHide(0)}
               >
-                {date7} {day007}
+                {date1} {day001}
               </div>
-              <div className={this.state.day7}>
+              <div className={this.state.day1}>
                 {this.weatherInfo()}
-                {day7}
+                {day1}
               </div>
             </div>
-          )}
+            <div>
+              <div
+                className={this.searchOrForecast()}
+                onClick={() => this.showHide(1)}
+              >
+                {date2} {day002}
+              </div>
+              <div className={this.state.day2}>
+                {this.weatherInfo()}
+                {day2}
+              </div>
+            </div>
+            <div>
+              <div
+                className={this.searchOrForecast()}
+                onClick={() => this.showHide(2)}
+              >
+                {date3} {day003}
+              </div>
+              <div className={this.state.day3}>
+                {this.weatherInfo()}
+                {day3}
+              </div>
+            </div>
+            <div>
+              <div
+                className={this.searchOrForecast()}
+                onClick={() => this.showHide(3)}
+              >
+                {date4} {day004}
+              </div>
+              <div className={this.state.day4}>
+                {this.weatherInfo()}
+                {day4}
+              </div>
+            </div>
+            <div>
+              <div
+                className={this.searchOrForecast()}
+                onClick={() => this.showHide(4)}
+              >
+                {date5} {day005}
+              </div>
+              <div className={this.state.day5}>
+                {this.weatherInfo()}
+                {day5}
+              </div>
+            </div>
+            <div>
+              <div
+                className={`${this.searchOrForecast()} ${this.state.lastDayCss}`}
+                onClick={() => this.showHide(5)}
+              >
+                {date6} {day006}
+              </div>
+              <div className={this.state.day6}>
+                {this.weatherInfo()}
+                {day6}
+              </div>
+            </div>
+            {typeof day7[0] == "undefined" ? (
+              ""
+            ) : (
+              <div>
+                <div
+                  className={`${this.searchOrForecast()} ${
+                    this.state.lastDayCss
+                  }`}
+                  onClick={() => this.showHide(6)}
+                >
+                  {date7} {day007}
+                </div>
+                <div className={this.state.day7}>
+                  {this.weatherInfo()}
+                  {day7}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );

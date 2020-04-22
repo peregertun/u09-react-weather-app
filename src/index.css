@@ -5,12 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-image: url("clouds-background.jpg");
-  background-color: white;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   padding-bottom: 124px;
+  background-color: #e4eef2;
 }
 
 code {
@@ -22,8 +18,12 @@ code {
   padding-top: 3rem;
   padding-bottom: 3rem;
   margin-bottom: 0;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,.125)
+  border: 1px solid rgba(0,0,0,.125);
+  background-image: url("clouds-background.jpg");
+  background-color: white;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 @media (min-width: 768px) {
   .jumbotron {

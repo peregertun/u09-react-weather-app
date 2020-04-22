@@ -100,6 +100,7 @@ class Jumbotron extends React.Component {
   }
 
   ToggleUnits = (latitude, longitude) => {
+
     this.setState((state) => ({
       toggleunit: !state.toggleunit,
       latitude: latitude,
@@ -107,6 +108,14 @@ class Jumbotron extends React.Component {
     }));
     this.getWeather(latitude, longitude, this.state.toggleunit);
   };
+
+  toggleUnitsFromApp = () => {
+    this.setState((state) => ({
+      toggleunit: !state.toggleunit,
+
+    }));
+    this.getWeather(this.state.latitude, this.state.longitude, this.state.toggleunit);
+  }
 
   render() {
     const {
@@ -126,7 +135,7 @@ class Jumbotron extends React.Component {
       forecast,
       unit,
     } = this.state;
-    // console.log(forecast);
+
     return (
       <div>
         <div className="card mb-2">
@@ -136,7 +145,7 @@ class Jumbotron extends React.Component {
         </div>
         {area && (
           <div>
-            <div className="jumbotron text-center bg-blue">
+            <div className="jumbotron text-center">
               <h1 className="display-4">
                 {area}, {country}
               </h1>
@@ -151,9 +160,6 @@ class Jumbotron extends React.Component {
                   <span className="text-muted">
                     , feels like {feelsLike}&deg;
                   </span>
-                  <button onClick={() => this.ToggleUnits(latitude, longitude)}>
-                    {this.state.toggleunit ? "F" : "C"}
-                  </button>
                 </h2>
               )}
               <ul className="list-unstyled list-group">
