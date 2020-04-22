@@ -214,7 +214,7 @@ class App extends React.Component {
                 {this.state.city && (
                   <div className="col-xl-8 col-12 mb-2">
                     {typeof this.state.prog != "undefined" ? (
-                      <Forecast prog={this.state.prog} />
+                      <Forecast prog={this.state.prog} unit={this.state.unit} />
                     ) : (
                         ""
                       )}
